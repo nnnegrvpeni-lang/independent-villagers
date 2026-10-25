@@ -113,13 +113,15 @@ public final class FarmerFieldTask extends MultiTickTask<VillagerEntity> {
             } else if (this.x35hbh6x2b34v == FarmerFieldPhase.xb5ox5sk2beiz) {
                if (!this.x2osz16rzlj1uy(var1, var2)) {
                   if (this.x22gyzpic72nbl >= 1) {
-                     // Only build a farm when NEEDED:
-                     // 1. Colony has less than 28 farmland blocks (i.e. no full farm yet)
-                     // 2. Farmer has a water bucket
-                     // 3. Farmer has at least 14 seeds in inventory
+                     // Dynamic farm quota based on colony development:
+                     // 0-2 buildings: 1 farm (28 blocks)
+                     // 3-5 buildings: 2 farms (56 blocks)
+                     // 6-8 buildings: 3 farms (84 blocks)
                      int currentFarmland = this.x2t4nzijeau7w8.x1hdthtpd2qb8g().size();
-                     int maxFarmland = Math.max(28, this.x2t4nzijeau7w8.radius() > 120 ? 56 : 28);
-                     if (currentFarmland < maxFarmland && x3ek8tyax561ln(var2) >= 14 && x23na3hzbpcw6h(var2, Items.WATER_BUCKET)) {
+                     int buildingsCount = this.x2t4nzijeau7w8.x1ja61emeln2hc().size();
+                     int maxFarms = Math.max(1, (buildingsCount + 2) / 3);
+                     int maxFarmland = maxFarms * 28;
+                     if (currentFarmland < maxFarmland && x3ek8tyax561ln(var2) >= 14 && (x23na3hzbpcw6h(var2, Items.WATER_BUCKET) || x23na3hzbpcw6h(var2, Items.BUCKET))) {
                         this.x2zlk0t7dy583 = this.x2zlm4l0rs2vkb(var1, var2).orElse(null);
                         if (this.x2zlk0t7dy583 != null) {
                            this.x35hbh6x2b34v = FarmerFieldPhase.x3iyjmrguzv8fd;
@@ -447,8 +449,8 @@ public final class FarmerFieldTask extends MultiTickTask<VillagerEntity> {
       for (int var3 = 0; var3 < 1024; var3++) {
          BlockPos var4 = x8hdlkby0zqy7.get(Math.floorMod(this.x2t1b8rmtaayej++, x8hdlkby0zqy7.size()));
          double distSq = var4.getSquaredDistance(BlockPos.ORIGIN);
-         // Keep farm away from town center plaza (min 14 blocks, max 48 blocks)
-         if (distSq < 14.0 * 14.0 || distSq > 48.0 * 48.0) {
+         // Keep farm away from town center plaza (min 14 blocks, max 64 blocks)
+         if (distSq < 14.0 * 14.0 || distSq > 64.0 * 64.0) {
             continue;
          }
 
@@ -480,7 +482,7 @@ public final class FarmerFieldTask extends MultiTickTask<VillagerEntity> {
                   }
                }
 
-               if (validBlocks >= 52) {
+               if (validBlocks >= 42) {
                   return Optional.of(var8);
                }
             }
