@@ -11,6 +11,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.IntStream;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -114,6 +116,10 @@ public final class FarmerFieldTask extends MultiTickTask<VillagerEntity> {
                      if (x3ek8tyax561ln(var2) > 0) {
                         this.x2zlk0t7dy583 = this.x2zlm4l0rs2vkb(var1, var2).orElse(null);
                         if (this.x2zlk0t7dy583 != null) {
+                           if (!x23na3hzbpcw6h(var2, Items.WATER_BUCKET) && !xmxmjfdwaicjw(var1, this.x2zlk0t7dy583)) {
+                              this.x35hbh6x2b34v = FarmerFieldPhase.x27smpl89pkspo;
+                              return;
+                           }
                            this.x35hbh6x2b34v = FarmerFieldPhase.x3iyjmrguzv8fd;
                            this.x3hb4q8slofu00 = 0;
                            this.x186dphgnqvqj8 = this.x2zlk0t7dy583;
@@ -334,9 +340,7 @@ public final class FarmerFieldTask extends MultiTickTask<VillagerEntity> {
             } else if (this.x2iq1y0s1fcym6 != null) {
                this.x186dphgnqvqj8 = this.x2iq1y0s1fcym6;
                this.x35hbh6x2b34v = FarmerFieldPhase.x2w0oud80dmgzo;
-            } else if (var4 > 0 && this.x383bqm5z33o4t != null) {
-               this.x186dphgnqvqj8 = this.x383bqm5z33o4t;
-               this.x35hbh6x2b34v = FarmerFieldPhase.x1q82g0tnxasf1;
+            // random grass tilling disabled to enforce bounded modular farms
             } else if (var4 > 0 && this.x3abk5220xo1ii != null && !x23na3hzbpcw6h(var2, Items.WATER_BUCKET)) {
                this.x186dphgnqvqj8 = this.x3abk5220xo1ii;
                this.x35hbh6x2b34v = FarmerFieldPhase.x30wk28d2cesij;
@@ -460,12 +464,13 @@ public final class FarmerFieldTask extends MultiTickTask<VillagerEntity> {
                         && x2c1mm5rnqniq6(var1.getBlockState(var11))
                         && x2csm4l72r60h(var1, var11)
                         && this.x14ghv3cndp6s0(var1, var11)
+                        && !this.x2t4nzijeau7w8.x2a24huns14rw4(var11, 2)
                         && (x23na3hzbpcw6h(var2, Items.WATER_BUCKET) || xmxmjfdwaicjw(var1, var11))) {
                         var9++;
                      }
                   }
 
-                  if (var9 >= 4) {
+                  if (var9 >= 20) {
                      return Optional.of(var8);
                   }
                }
@@ -552,6 +557,46 @@ public final class FarmerFieldTask extends MultiTickTask<VillagerEntity> {
       return List.copyOf(var0);
    }
 
+   private static final BlockPos[] FARM_OFFSETS_5X5 = new BlockPos[]{
+      // Phase 1: Border logs (16 blocks around perimeter)
+      new BlockPos(-2, 0, -2), new BlockPos(-1, 0, -2), new BlockPos(0, 0, -2), new BlockPos(1, 0, -2), new BlockPos(2, 0, -2),
+      new BlockPos(2, 0, -1),  new BlockPos(2, 0, 0),   new BlockPos(2, 0, 1),  new BlockPos(2, 0, 2),
+      new BlockPos(1, 0, 2),   new BlockPos(0, 0, 2),   new BlockPos(-1, 0, 2), new BlockPos(-2, 0, 2),
+      new BlockPos(-2, 0, 1),  new BlockPos(-2, 0, 0),  new BlockPos(-2, 0, -1),
+      // Phase 2: Interior Farmland & Seeds (8 blocks)
+      new BlockPos(-1, 0, -1), new BlockPos(0, 0, -1),  new BlockPos(1, 0, -1),
+      new BlockPos(-1, 0, 0),                           new BlockPos(1, 0, 0),
+      new BlockPos(-1, 0, 1),  new BlockPos(0, 0, 1),   new BlockPos(1, 0, 1),
+      // Phase 3: Center Water (1 block, STRICTLY LAST)
+      new BlockPos(0, 0, 0)
+   };
+
+   private static BlockState getBorderBlockForBiome(ServerWorld var0, BlockPos var1) {
+      Optional<RegistryKey<Biome>> var2 = var0.getBiome(var1).getKey();
+      if (var2.isPresent()) {
+         String var3 = var2.get().getValue().getPath();
+         if (var3.contains("taiga") || var3.contains("snowy") || var3.contains("frozen") || var3.contains("grove")) {
+            return Blocks.SPRUCE_LOG.getDefaultState();
+         }
+         if (var3.contains("savanna")) {
+            return Blocks.ACACIA_LOG.getDefaultState();
+         }
+         if (var3.contains("desert") || var3.contains("badlands")) {
+            return Blocks.SMOOTH_SANDSTONE.getDefaultState();
+         }
+         if (var3.contains("jungle")) {
+            return Blocks.JUNGLE_LOG.getDefaultState();
+         }
+         if (var3.contains("dark_forest")) {
+            return Blocks.DARK_OAK_LOG.getDefaultState();
+         }
+         if (var3.contains("birch")) {
+            return Blocks.BIRCH_LOG.getDefaultState();
+         }
+      }
+      return Blocks.OAK_LOG.getDefaultState();
+   }
+
    private void x3cfcl93yta6x3(ServerWorld var1, VillagerEntity var2) {
       if (this.x2zlk0t7dy583 != null && !this.x14ghv3cndp6s0(var1, this.x2zlk0t7dy583)) {
          this.x1joansufiq3vh.put(this.x2zlk0t7dy583.toImmutable(), var1.getTime() + 1200L);
@@ -561,39 +606,42 @@ public final class FarmerFieldTask extends MultiTickTask<VillagerEntity> {
          this.x302ihddc8urvz = null;
          this.x3ge7r6nupqfxf = 0;
          this.x22gyzpic72nbl = 0;
-      } else if (this.x3hb4q8slofu00 < 25 && x3ek8tyax561ln(var2) != 0) {
+      } else if (this.x3hb4q8slofu00 < FARM_OFFSETS_5X5.length && x3ek8tyax561ln(var2) != 0) {
          var2.getBrain().remember(ColonyMemoryModules.x2bwom1pasl6g5, this.x2zlk0t7dy583);
-         if (this.x3hb4q8slofu00 == 0 && !xmxmjfdwaicjw(var1, this.x2zlk0t7dy583)) {
-            if (!x23na3hzbpcw6h(var2, Items.WATER_BUCKET)
-               || !x2c1mm5rnqniq6(var1.getBlockState(this.x2zlk0t7dy583))
-               || !x2csm4l72r60h(var1, this.x2zlk0t7dy583)) {
-               this.x35hbh6x2b34v = FarmerFieldPhase.x27smpl89pkspo;
-               return;
-            }
-
-            if (!this.x3ihyxa2ovvxin(var1, var2, this.x2zlk0t7dy583.up())) {
-               return;
-            }
-
-            if (!var1.getBlockState(this.x2zlk0t7dy583.up()).isAir()) {
-               ColonyProtectionUtils.x231if4rvsvptj(var1, this.x2zlk0t7dy583.up(), false, var2);
-            }
-
-            if (ColonyProtectionUtils.x1bq0f8n53gtob(var1, this.x2zlk0t7dy583, Blocks.WATER.getDefaultState(), 3) && x17w4mwk2x8sut(var2, Items.WATER_BUCKET)) {
-               this.xfiiclr55ays8(var1, var2, new ItemStack(Items.BUCKET));
-            }
-         }
-
-         BlockPos var3 = this.x2zlk0t7dy583.add(this.x3hb4q8slofu00 % 5 - 2, 0, this.x3hb4q8slofu00 / 5 - 2);
-         if (this.x35axhpl2cj5i9.contains(var3)
-            || !this.x14ghv3cndp6s0(var1, var3)
-            || !x2csm4l72r60h(var1, var3)
-            || !x2c1mm5rnqniq6(var1.getBlockState(var3))
-            || !xmxmjfdwaicjw(var1, var3)) {
+         BlockPos var3 = this.x2zlk0t7dy583.add(FARM_OFFSETS_5X5[this.x3hb4q8slofu00]);
+         if (!this.x14ghv3cndp6s0(var1, var3)) {
             this.x3hb4q8slofu00++;
+            this.x302ihddc8urvz = null;
          } else if (this.x3ihyxa2ovvxin(var1, var2, var3.up())) {
             if (this.x39cq9cwr96dck.xpohy1q30uxlk(var1, var2, var3.up(), ColonyConfig.x2by5f9ehxvwk9().work.farming_ticks, false)) {
-               this.x10t5vgir9ic2y(var1, var2, var3);
+               // Support block below if empty to prevent floating/leaking
+               if (var1.getBlockState(var3.down()).isAir() || !var1.getBlockState(var3.down()).isOpaqueFullCube()) {
+                  ColonyProtectionUtils.x1bq0f8n53gtob(var1, var3.down(), Blocks.DIRT.getDefaultState(), 3);
+               }
+               // Clear air space above
+               if (!var1.getBlockState(var3.up()).isAir()) {
+                  ColonyProtectionUtils.x231if4rvsvptj(var1, var3.up(), false, var2);
+               }
+
+               if (this.x3hb4q8slofu00 < 16) {
+                  // Phase 1: Border log
+                  BlockState borderState = getBorderBlockForBiome(var1, var3);
+                  ColonyProtectionUtils.x1bq0f8n53gtob(var1, var3, borderState, 3);
+                  var2.swingHand(Hand.MAIN_HAND);
+               } else if (this.x3hb4q8slofu00 < 24) {
+                  // Phase 2: Farmland & crop planting
+                  this.x10t5vgir9ic2y(var1, var2, var3);
+               } else {
+                  // Phase 3: Water (strictly last at 0, 0)
+                  if (!var1.getBlockState(var3).isOf(Blocks.WATER)) {
+                     ColonyProtectionUtils.x1bq0f8n53gtob(var1, var3, Blocks.WATER.getDefaultState(), 3);
+                     if (x17w4mwk2x8sut(var2, Items.WATER_BUCKET)) {
+                        this.xfiiclr55ays8(var1, var2, new ItemStack(Items.BUCKET));
+                     }
+                  }
+                  var2.swingHand(Hand.MAIN_HAND);
+                  ColonyChatFeedback.x2t98zlq4lu49t(var2, "огород построен", 1);
+               }
                this.x3hb4q8slofu00++;
                this.x302ihddc8urvz = null;
             }
@@ -612,7 +660,7 @@ public final class FarmerFieldTask extends MultiTickTask<VillagerEntity> {
       if (x3ek8tyax561ln(var2) != 0 && x2csm4l72r60h(var1, var3) && this.x14ghv3cndp6s0(var1, var3)) {
          if (this.x7lsf0es95maw(var1, var2, var3.up()) >= 0) {
             BlockState var4 = var1.getBlockState(var3);
-            if (var4.isOf(Blocks.FARMLAND) || x2c1mm5rnqniq6(var4) && xmxmjfdwaicjw(var1, var3)) {
+            if (var4.isOf(Blocks.FARMLAND) || x2c1mm5rnqniq6(var4) && (this.x35hbh6x2b34v == FarmerFieldPhase.x3iyjmrguzv8fd || xmxmjfdwaicjw(var1, var3))) {
                if (!var1.getBlockState(var3.up()).isAir()) {
                   ColonyProtectionUtils.x231if4rvsvptj(var1, var3.up(), false, var2);
                }

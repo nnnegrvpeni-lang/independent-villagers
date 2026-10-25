@@ -3,62 +3,13 @@
     {
       "element": {
         "element_type": "minecraft:legacy_single_pool_element",
-        "location": "smart_colonies:village/desert/infrastructure/desert/town_centers/desert_meeting_point_1",
+        "location": "smart_colonies:village/desert/infrastructure/desert/town_centers/desert_starter_camp",
         "processors": {
           "processors": []
         },
         "projection": "rigid"
       },
-      "weight": 98
-    },
-    {
-      "element": {
-        "element_type": "minecraft:legacy_single_pool_element",
-        "location": "smart_colonies:village/desert/infrastructure/desert/town_centers/desert_meeting_point_2",
-        "processors": {
-          "processors": []
-        },
-        "projection": "rigid"
-      },
-      "weight": 98
-    },
-    {
-      "element": {
-        "element_type": "minecraft:legacy_single_pool_element",
-        "location": "smart_colonies:village/desert/infrastructure/desert/town_centers/desert_meeting_point_3",
-        "processors": {
-          "processors": []
-        },
-        "projection": "rigid"
-      },
-      "weight": 49
-    },
-    {
-      "element": {
-        "element_type": "minecraft:legacy_single_pool_element",
-        "location": "smart_colonies:village/desert/infrastructure/desert/zombie/town_centers/desert_meeting_point_1",
-        "processors": "minecraft:zombie_desert",
-        "projection": "rigid"
-      },
-      "weight": 2
-    },
-    {
-      "element": {
-        "element_type": "minecraft:legacy_single_pool_element",
-        "location": "smart_colonies:village/desert/infrastructure/desert/zombie/town_centers/desert_meeting_point_2",
-        "processors": "minecraft:zombie_desert",
-        "projection": "rigid"
-      },
-      "weight": 2
-    },
-    {
-      "element": {
-        "element_type": "minecraft:legacy_single_pool_element",
-        "location": "smart_colonies:village/desert/infrastructure/desert/zombie/town_centers/desert_meeting_point_3",
-        "processors": "minecraft:zombie_desert",
-        "projection": "rigid"
-      },
-      "weight": 1
+      "weight": 100
     }
   ],
   "fallback": "minecraft:empty"
