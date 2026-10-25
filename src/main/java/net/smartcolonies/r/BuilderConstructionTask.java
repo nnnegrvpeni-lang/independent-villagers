@@ -55,7 +55,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.Heightmap.Type;
-import net.smartcolonies.mixin.x2gac63vevkbv3;
+import net.smartcolonies.mixin.StructureTemplateAccessor;
 
 public final class BuilderConstructionTask extends MultiTickTask<VillagerEntity> {
    private static final int x2j5qpw4473kyo = 12000;
@@ -399,7 +399,7 @@ public final class BuilderConstructionTask extends MultiTickTask<VillagerEntity>
          .map(
             var1x -> {
                StructurePlacementData var2 = new StructurePlacementData().setMirror(BlockMirror.NONE).setRotation(BlockRotation.NONE).setIgnoreEntities(true);
-               List var3 = ((x2gac63vevkbv3)var1x).xbqthaw3aplko();
+               List var3 = ((StructureTemplateAccessor)var1x).xbqthaw3aplko();
                if (var3.isEmpty()) {
                   return List.of();
                } else {

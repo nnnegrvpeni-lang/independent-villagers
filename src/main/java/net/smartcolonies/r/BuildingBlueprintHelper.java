@@ -27,7 +27,7 @@ import net.minecraft.structure.pool.SinglePoolElement;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.smartcolonies.mixin.x2gac63vevkbv3;
+import net.smartcolonies.mixin.StructureTemplateAccessor;
 
 public final class BuildingBlueprintHelper {
    private static final Map<Colony, Map<BlockPos, Long>> xm2t2pguz7drc = new WeakHashMap<>();
@@ -146,7 +146,7 @@ public final class BuildingBlueprintHelper {
                      StructureTemplate var8 = (StructureTemplate)var0.getStructureTemplateManager().getTemplate(var12).orElse(null);
                      if (var8 != null) {
                         StructurePlacementData var9 = new StructurePlacementData().setRotation(var5.getRotation());
-                        List<StructureTemplate.StructureBlockInfo> var10 = ((x2gac63vevkbv3)var8).xbqthaw3aplko().getFirst().getAll();
+                        List<StructureTemplate.StructureBlockInfo> var10 = ((StructureTemplateAccessor)var8).xbqthaw3aplko().getFirst().getAll();
                         if (var10.stream()
                            .anyMatch(
                               var3 -> var3.state().isOf(Blocks.FARMLAND) && StructureTemplate.transform(var9, var3.pos()).add(var5.getPos()).equals(var1)

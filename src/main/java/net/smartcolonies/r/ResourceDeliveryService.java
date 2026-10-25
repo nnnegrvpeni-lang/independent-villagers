@@ -14,7 +14,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
-import net.smartcolonies.mixin.x3u93owcuyb5d4;
+import net.smartcolonies.mixin.ItemEntityAccessor;
 
 public final class ResourceDeliveryService {
    private ResourceDeliveryService() {
@@ -227,7 +227,7 @@ public final class ResourceDeliveryService {
    static boolean x2t0sm1vfzey0p(ServerWorld var0, Colony var1, VillagerEntity var2, ItemEntity var3, ColonyRole var4) {
       if (var3.isRemoved()
          || var3.cannotPickup()
-         || ((x3u93owcuyb5d4)var3).x6t8mlwqv273n() != null
+         || ((ItemEntityAccessor)var3).x6t8mlwqv273n() != null
          || ColonyTimeService.x3gqyq7yie9jxr(var0, var3.getBlockPos())
          || !var2.canSee(var3)
          || !x23ik6olfsfgwk(var3.getStack(), var4)) {

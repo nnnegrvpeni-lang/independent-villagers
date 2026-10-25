@@ -18,7 +18,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
-import net.smartcolonies.mixin.x2gac63vevkbv3;
+import net.smartcolonies.mixin.StructureTemplateAccessor;
 
 public final class StructureBlockScanner {
    private StructureBlockScanner() {
@@ -65,7 +65,7 @@ public final class StructureBlockScanner {
       StructureTemplate var6 = (StructureTemplate)var0.getStructureTemplateManager().getTemplate(var2).orElse(null);
       if (var6 != null) {
          StructurePlacementData var7 = new StructurePlacementData().setRotation(var4);
-         List var8 = ((x2gac63vevkbv3)var6).xbqthaw3aplko();
+         List var8 = ((StructureTemplateAccessor)var6).xbqthaw3aplko();
          if (!var8.isEmpty()) {
             for (StructureBlockInfo var10 : ((PalettedBlockInfoList)var8.getFirst()).getAll()) {
                BlockState var11 = var10.state().rotate(var4);

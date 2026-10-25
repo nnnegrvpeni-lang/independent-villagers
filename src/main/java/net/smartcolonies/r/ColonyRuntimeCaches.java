@@ -23,7 +23,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.event.GameEvent;
-import net.smartcolonies.mixin.xnknrz08jrie3;
+import net.smartcolonies.mixin.TrapdoorBlockAccessor;
 
 public final class ColonyRuntimeCaches {
    private static final Map<ServerWorld, Map<BlockPos, Long>> x125nzphw6b46r = new WeakHashMap<>();
@@ -51,7 +51,7 @@ public final class ColonyRuntimeCaches {
                   BlockState var8 = var0.getBlockState(var7);
                   boolean var9 = var8.getBlock() instanceof FenceGateBlock;
                   boolean var10 = var8.getBlock() instanceof DoorBlock && DoorBlock.canOpenByHand(var8);
-                  boolean var11 = var8.getBlock() instanceof TrapdoorBlock var12 && ((xnknrz08jrie3)var12).x27hnusyzwjzma().canOpenByHand();
+                  boolean var11 = var8.getBlock() instanceof TrapdoorBlock var12 && ((TrapdoorBlockAccessor)var12).x27hnusyzwjzma().canOpenByHand();
                   if ((var9 || var10 || var11)
                      && (!var9 || !ColonyBiomeHelper.x3di73z4zkdknf(var0, var7))
                      && (!var10 || var8.get(DoorBlock.HALF) != DoubleBlockHalf.UPPER)
@@ -144,7 +144,7 @@ public final class ColonyRuntimeCaches {
 
    private static void x16779z1in3x0y(ServerWorld var0, BlockPos var1, BlockState var2, boolean var3) {
       if (var0.setBlockState(var1, (BlockState)var2.with(TrapdoorBlock.OPEN, var3), 3)) {
-         BlockSetType var4 = ((xnknrz08jrie3)var2.getBlock()).x27hnusyzwjzma();
+         BlockSetType var4 = ((TrapdoorBlockAccessor)var2.getBlock()).x27hnusyzwjzma();
          var0.playSound(null, var1, var3 ? var4.trapdoorOpen() : var4.trapdoorClose(), SoundCategory.BLOCKS, 1.0F, 1.0F);
          var0.emitGameEvent(null, var3 ? GameEvent.BLOCK_OPEN : GameEvent.BLOCK_CLOSE, var1);
       }

@@ -9,7 +9,7 @@ import net.minecraft.entity.ai.goal.Goal.Control;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.item.Item;
-import net.smartcolonies.mixin.xcvv14vzbvjae;
+import net.smartcolonies.mixin.MobEntityAccessor;
 
 public final class IronGolemDefendColonyGoal extends Goal {
    private static final Map<AnimalEntity, IronGolemDefendColonyGoal> x2jqgbs3h8y4a3 = new WeakHashMap<>();
@@ -26,7 +26,7 @@ public final class IronGolemDefendColonyGoal extends Goal {
    public static void follow(AnimalEntity var0, VillagerEntity var1, Item var2) {
       IronGolemDefendColonyGoal var3 = x2jqgbs3h8y4a3.computeIfAbsent(var0, var0x -> {
          IronGolemDefendColonyGoal var1x = new IronGolemDefendColonyGoal(var0x);
-         ((xcvv14vzbvjae)var0x).x26nz0ko7si5a7().add(1, var1x);
+         ((MobEntityAccessor)var0x).x26nz0ko7si5a7().add(1, var1x);
          return var1x;
       });
       var3.x3iilaqce7f5kt = var1;

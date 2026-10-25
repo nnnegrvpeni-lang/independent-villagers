@@ -23,7 +23,7 @@ import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.chunk.WorldChunk;
-import net.smartcolonies.mixin.x2gac63vevkbv3;
+import net.smartcolonies.mixin.StructureTemplateAccessor;
 
 public final class VillageChunkGenerateListener {
    private static final Map<ServerWorld, Set<ChunkPos>> xp4ojrpa6zqhd = new WeakHashMap<>();
@@ -77,7 +77,7 @@ public final class VillageChunkGenerateListener {
                         StructureTemplate var12 = (StructureTemplate)var0.getStructureTemplateManager().getTemplate(var21).orElseThrow();
                         StructurePlacementData var13 = new StructurePlacementData().setRotation(var9.getRotation());
 
-                        for (StructureBlockInfo var16 : ((x2gac63vevkbv3)var12).xbqthaw3aplko().getFirst().getAll()) {
+                        for (StructureBlockInfo var16 : ((StructureTemplateAccessor)var12).xbqthaw3aplko().getFirst().getAll()) {
                            if (!var16.state().isOf(Blocks.JIGSAW) && !var16.state().isOf(Blocks.STRUCTURE_BLOCK)) {
                               BlockPos var17 = StructureTemplate.transform(var13, var16.pos()).add(var9.getPos());
                               if (var4.contains(var17)) {

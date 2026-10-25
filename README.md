@@ -27,16 +27,19 @@
 - **Причина**: Имена ролей в enum брались из обфусцированных констант, а в `ru_ru.json` лежали канонические ключи (`fisherman`, `elder`, `guard`).
 - **Решение**: В enum ролей восстановлены канонические сериализованные имена, добавлены обратные алиасы в языковые файлы и механизм авто-обновления NBT для уже созданных миров.
 
-### 3. Рефакторинг и деобфускация кодовой базы (113 классов)
-- **Проблема**: Все 113 классов логики колонии носили обфусцированные имена (`x1wie612630ex`, `xpmscpidlka0a`, `x2s3h58zqm725b`, `x2cvbyh5y5day0` и т.д.), что делало разработку и понимание архитектуры крайне затруднительными.
-- **Решение**: Выполнен полный смысловой рефакторинг с заменой 2780+ ссылок по всей кодовой базе:
-  - `FarmerFieldTask`, `FarmerFieldPhase`, `FarmerIrrigationHelper`, `FarmerCropPlanner` — система фермерства.
-  - `BuilderConstructionTask`, `BuilderStarterChestTask`, `BuilderRepairTask`, `BuilderVillageWallTask`, `BuilderRoadTask` — система строительства.
-  - `ColonyManager`, `Colony`, `ColonyState`, `ColonyRole`, `ConstructionJob`, `ConstructionStatus` — ядро колонии и данные.
-  - `MilitiaCombatTask`, `VillagerRaidShelterTask`, `IronGolemAttackHelper` — защита и ополчение.
-  - `LumberjackTask`, `MinerExpeditionTask`, `FishermanTask`, `RancherAnimalTask` — специализированные роли.
-  - `ColonyConfig`, `VillageConfig`, `RolesConfig`, `WorkConfig`, `DebugConfig` — модульная конфигурация.
-- **Результат**: Проект собирается на 100% начисто с сохранением полной обратной совместимости.
+### 3. Рефакторинг и деобфускация кодовой базы (все 145 классов)
+- **Проблема**: Все классы логики и миксинов носили обфусцированные имена (`x1wie612630ex`, `xpmscpidlka0a`, `x12eywdeqyc6hd` и т.д.), что делало разработку и понимание архитектуры крайне затруднительными.
+- **Решение**: Выполнен полный смысловой рефакторинг:
+  - **113 классов доменной логики** в `net.smartcolonies.r`:
+    - `FarmerFieldTask`, `FarmerFieldPhase`, `FarmerIrrigationHelper`, `FarmerCropPlanner` — система фермерства.
+    - `BuilderConstructionTask`, `BuilderStarterChestTask`, `BuilderRepairTask`, `BuilderVillageWallTask`, `BuilderRoadTask` — система строительства.
+    - `ColonyManager`, `Colony`, `ColonyState`, `ColonyRole`, `ConstructionJob`, `ConstructionStatus` — ядро колонии и данные.
+    - `MilitiaCombatTask`, `VillagerRaidShelterTask`, `IronGolemAttackHelper` — защита и ополчение.
+    - `LumberjackTask`, `MinerExpeditionTask`, `FishermanTask`, `RancherAnimalTask` — специализированные роли.
+    - `ColonyConfig`, `VillageConfig`, `RolesConfig`, `WorkConfig`, `DebugConfig` — модульная конфигурация.
+  - **32 класса миксинов** в `net.smartcolonies.mixin` и конфиг `smart_colonies.mixins.json`:
+    - `VillagerEntityMixin`, `WorldChunkMixin`, `StructureTemplateAccessor`, `IronGolemEntityMixin`, `ActivityInvoker`, `SensorTypeInvoker`, `FarmerVillagerTaskMixin`, `LivingEntityMixin`, `MinecraftServerMixin` и др.
+- **Результат**: Кодовая база теперь чистая, структурированная и читаемая, проект собирается на 100% без ошибок.
 
 ---
 
