@@ -28,6 +28,7 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.registry.tag.StructureTags;
 import net.minecraft.server.world.ServerWorld;
@@ -107,6 +108,9 @@ public final class FarmerFieldTask extends MultiTickTask<VillagerEntity> {
          if (ColonyProtectionUtils.x35ev8l9vc9uk7(var1)) {
             this.x1hnez0xuhdh5r = var3 + 2L;
             if (this.x35hbh6x2b34v == FarmerFieldPhase.xi9t9eaf5346z || this.x35hbh6x2b34v == FarmerFieldPhase.x27smpl89pkspo) {
+               if (var3 % 40L == 0L) {
+                  this.clearOverhangsAboveFarmland(var1, var2);
+               }
                this.x16irl4fyul8tl(var1, var2);
             } else if (this.x248yv75v4ezcm >= 64) {
                this.x35hbh6x2b34v = FarmerFieldPhase.x27smpl89pkspo;
@@ -135,6 +139,9 @@ public final class FarmerFieldTask extends MultiTickTask<VillagerEntity> {
                   }
                }
             } else if (this.x35hbh6x2b34v == FarmerFieldPhase.x3iyjmrguzv8fd) {
+               if (this.x3hb4q8slofu00 == 0 && this.x2zlk0t7dy583 != null) {
+                  this.clearFarmExcavationVolume(var1, this.x2zlk0t7dy583, var2);
+               }
                this.x3cfcl93yta6x3(var1, var2);
             } else if (this.x186dphgnqvqj8 == null) {
                this.x35hbh6x2b34v = FarmerFieldPhase.xb5ox5sk2beiz;
@@ -633,9 +640,13 @@ public final class FarmerFieldTask extends MultiTickTask<VillagerEntity> {
                if (var1.getBlockState(var3.down()).isAir() || !var1.getBlockState(var3.down()).isOpaqueFullCube()) {
                   ColonyProtectionUtils.x1bq0f8n53gtob(var1, var3.down(), Blocks.DIRT.getDefaultState(), 3);
                }
-               // Clear air space above
-               if (!var1.getBlockState(var3.up()).isAir()) {
-                  ColonyProtectionUtils.x231if4rvsvptj(var1, var3.up(), false, var2);
+               // Clear all vertical headroom above this block (from Y+4 down to Y+1)
+               for (int yOffset = 4; yOffset >= 1; yOffset--) {
+                  BlockPos above = var3.up(yOffset);
+                  BlockState aboveState = var1.getBlockState(above);
+                  if (!aboveState.isAir() && !aboveState.isOf(Blocks.COMPOSTER)) {
+                     var1.breakBlock(above, true, var2);
+                  }
                }
 
                if (this.x3hb4q8slofu00 < 28) {
@@ -937,5 +948,38 @@ public final class FarmerFieldTask extends MultiTickTask<VillagerEntity> {
       var2.getBrain().forget(ColonyMemoryModules.x2bwom1pasl6g5);
       this.x2t4nzijeau7w8 = null;
       this.x186dphgnqvqj8 = null;
+   }
+
+   private void clearFarmExcavationVolume(ServerWorld world, BlockPos center, VillagerEntity farmer) {
+      for (int dx = -3; dx <= 3; dx++) {
+         for (int dz = -4; dz <= 4; dz++) {
+            int cx = center.getX() + dx;
+            int cz = center.getZ() + dz;
+            if (!world.getChunkManager().isChunkLoaded(cx >> 4, cz >> 4)) {
+               continue;
+            }
+            for (int y = center.getY() + 4; y >= center.getY() + 1; y--) {
+               BlockPos airPos = new BlockPos(cx, y, cz);
+               BlockState state = world.getBlockState(airPos);
+               if (!state.isAir() && !state.isOf(Blocks.COMPOSTER)) {
+                  world.breakBlock(airPos, true, farmer);
+               }
+            }
+         }
+      }
+   }
+
+   private void clearOverhangsAboveFarmland(ServerWorld world, VillagerEntity farmer) {
+      if (this.x2t4nzijeau7w8 == null) return;
+      for (BlockPos farmPos : this.x2t4nzijeau7w8.x1hdthtpd2qb8g()) {
+         if (!world.getChunkManager().isChunkLoaded(farmPos.getX() >> 4, farmPos.getZ() >> 4)) continue;
+         for (int yOff = 4; yOff >= 1; yOff--) {
+            BlockPos above = farmPos.up(yOff);
+            BlockState st = world.getBlockState(above);
+            if (!st.isAir() && !st.isIn(BlockTags.CROPS) && !st.isOf(Blocks.COMPOSTER)) {
+               world.breakBlock(above, true, farmer);
+            }
+         }
+      }
    }
 }
