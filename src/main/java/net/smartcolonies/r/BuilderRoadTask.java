@@ -11,6 +11,7 @@ import net.minecraft.entity.ai.brain.task.MultiTickTask;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Hand;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.BlockPos;
 
 public final class BuilderRoadTask extends MultiTickTask<VillagerEntity> {
@@ -31,12 +32,17 @@ public final class BuilderRoadTask extends MultiTickTask<VillagerEntity> {
                && var2x.roleOf(var2.getUuid()) == ColonyRole.x35csp4lojh59r
                && !var2x.x2s37os1kht7vr()
                && !var2x.x2ad3s8aentmo4().isEmpty()
-               && !var2x.x1n1a2vp01kxzf().isEmpty()
                && !ColonyBiomeHelper.xuj80syz8c60l(var1, var2x, var2)
                && !BuildingBlueprintHelper.x81tynoeus5lh(var1, var2x)
          )
          .orElse(null);
-      return this.x24sw4yjvvv3sl != null;
+      if (this.x24sw4yjvvv3sl != null) {
+         if (this.x24sw4yjvvv3sl.x1n1a2vp01kxzf().isEmpty()) {
+            scanAndQueueUnconnectedRoadGaps(var1, this.x24sw4yjvvv3sl);
+         }
+         return !this.x24sw4yjvvv3sl.x1n1a2vp01kxzf().isEmpty();
+      }
+      return false;
    }
 
    protected void run(ServerWorld var1, VillagerEntity var2, long var3) {
@@ -80,6 +86,7 @@ public final class BuilderRoadTask extends MultiTickTask<VillagerEntity> {
                ColonyChatFeedback.x2t98zlq4lu49t(var2, "дорога", 1);
                var2.swingHand(Hand.MAIN_HAND);
                ColonyManager.xchl1k1tnh3w8(var1).markDirty();
+               this.checkAndBridgeNearbyRoads(var1, var2, var5);
             }
          }
       }
@@ -125,5 +132,130 @@ public final class BuilderRoadTask extends MultiTickTask<VillagerEntity> {
          }
          ColonyProtectionUtils.x1bq0f8n53gtob(world, pos, Blocks.DIRT_PATH.getDefaultState(), 3);
       }
+   }
+   private static long lastBridgeCheckTime = 0L;
+
+   private static void scanAndQueueUnconnectedRoadGaps(ServerWorld world, Colony colony) {
+      if (world.getTime() - lastBridgeCheckTime < 60L) {
+         return;
+      }
+      lastBridgeCheckTime = world.getTime();
+
+      for (ConstructionJob job : colony.x1ja61emeln2hc()) {
+         BlockPos origin = job.x3ij6gescvakv2();
+         int w = job.xmu75rcopbjnh();
+         int l = job.xxjwqetbgzzle();
+
+         for (int dx = -6; dx <= w + 6; dx += 2) {
+            for (int dz = -6; dz <= l + 6; dz += 2) {
+               int px = origin.getX() + dx;
+               int pz = origin.getZ() + dz;
+               int py = world.getTopY(Type.MOTION_BLOCKING_NO_LEAVES, px, pz) - 1;
+               BlockPos p1 = new BlockPos(px, py, pz);
+               if (StructurePieceHelper.x3hqfrterusj2u(world, p1)) {
+                  for (Direction dir : Direction.Type.HORIZONTAL) {
+                     for (int step = 3; step <= 6; step++) {
+                        int qx = p1.getX() + dir.getOffsetX() * step;
+                        int qz = p1.getZ() + dir.getOffsetZ() * step;
+                        int qy = world.getTopY(Type.MOTION_BLOCKING_NO_LEAVES, qx, qz) - 1;
+                        BlockPos p2 = new BlockPos(qx, qy, qz);
+                        if (Math.abs(qy - py) <= 2 && StructurePieceHelper.x3hqfrterusj2u(world, p2)) {
+                           boolean hasGap = false;
+                           boolean obstructed = false;
+                           for (int s = 1; s < step; s++) {
+                              int mx = p1.getX() + dir.getOffsetX() * s;
+                              int mz = p1.getZ() + dir.getOffsetZ() * s;
+                              int my = world.getTopY(Type.MOTION_BLOCKING_NO_LEAVES, mx, mz) - 1;
+                              BlockPos mpos = new BlockPos(mx, my, mz);
+                              if (!StructurePieceHelper.x3hqfrterusj2u(world, mpos)) {
+                                 hasGap = true;
+                              }
+                              BlockState mState = world.getBlockState(mpos);
+                              if (mState.isOf(Blocks.WATER) || mState.isIn(BlockTags.WALLS) || mState.isIn(BlockTags.DOORS) || mState.isIn(BlockTags.PLANKS)) {
+                                 obstructed = true;
+                                 break;
+                              }
+                           }
+                           if (hasGap && !obstructed) {
+                              for (int s = 1; s < step; s++) {
+                                 int mx = p1.getX() + dir.getOffsetX() * s;
+                                 int mz = p1.getZ() + dir.getOffsetZ() * s;
+                                 int my = world.getTopY(Type.MOTION_BLOCKING_NO_LEAVES, mx, mz) - 1;
+                                 BlockPos mpos = new BlockPos(mx, my, mz);
+                                 if (!colony.x1n1a2vp01kxzf().contains(mpos)) {
+                                    colony.x1n1a2vp01kxzf().add(mpos);
+                                 }
+                              }
+                              return;
+                           }
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      }
+   }
+
+   private void checkAndBridgeNearbyRoads(ServerWorld world, VillagerEntity builder, BlockPos currentPos) {
+      for (int dx = -6; dx <= 6; dx++) {
+         for (int dz = -6; dz <= 6; dz++) {
+            double distSq = dx * dx + dz * dz;
+            if (distSq < 9.0 || distSq > 38.0) {
+               continue;
+            }
+            int nx = currentPos.getX() + dx;
+            int nz = currentPos.getZ() + dz;
+            int ny = world.getTopY(Type.MOTION_BLOCKING_NO_LEAVES, nx, nz) - 1;
+            BlockPos candidate = new BlockPos(nx, ny, nz);
+            if (Math.abs(ny - currentPos.getY()) <= 2 && StructurePieceHelper.x3hqfrterusj2u(world, candidate)) {
+               if (canBridgeDirectly(world, currentPos, candidate)) {
+                  bridgeRoadDirectly(world, builder, currentPos, candidate);
+                  return;
+               }
+            }
+         }
+      }
+   }
+
+   private boolean canBridgeDirectly(ServerWorld world, BlockPos from, BlockPos to) {
+      int dx = to.getX() - from.getX();
+      int dz = to.getZ() - from.getZ();
+      int steps = Math.max(Math.abs(dx), Math.abs(dz));
+      if (steps == 0) return false;
+
+      for (int i = 1; i < steps; i++) {
+         int bx = from.getX() + (dx * i) / steps;
+         int bz = from.getZ() + (dz * i) / steps;
+         int by = world.getTopY(Type.MOTION_BLOCKING_NO_LEAVES, bx, bz) - 1;
+         BlockPos bpos = new BlockPos(bx, by, bz);
+         BlockState state = world.getBlockState(bpos);
+         BlockState above = world.getBlockState(bpos.up());
+
+         if (state.isOf(Blocks.WATER) || state.isIn(BlockTags.WALLS) || state.isIn(BlockTags.DOORS)
+            || state.isIn(BlockTags.FENCES) || state.isIn(BlockTags.PLANKS) || state.isOf(Blocks.CHEST)
+            || state.isOf(Blocks.CAMPFIRE) || state.isOf(Blocks.COMPOSTER)
+            || (!above.isAir() && !above.isReplaceable())) {
+            return false;
+         }
+         if (Math.abs(by - from.getY()) > 2) {
+            return false;
+         }
+      }
+      return true;
+   }
+
+   private void bridgeRoadDirectly(ServerWorld world, VillagerEntity builder, BlockPos from, BlockPos to) {
+      int dx = to.getX() - from.getX();
+      int dz = to.getZ() - from.getZ();
+      int steps = Math.max(Math.abs(dx), Math.abs(dz));
+      for (int i = 1; i <= steps; i++) {
+         int bx = from.getX() + (dx * i) / steps;
+         int bz = from.getZ() + (dz * i) / steps;
+         int by = world.getTopY(Type.MOTION_BLOCKING_NO_LEAVES, bx, bz) - 1;
+         BlockPos bpos = new BlockPos(bx, by, bz);
+         buildWideRoadSegment(world, builder, bpos);
+      }
+      ColonyChatFeedback.x2t98zlq4lu49t(builder, "перекрёсток соединён", 1);
    }
 }
