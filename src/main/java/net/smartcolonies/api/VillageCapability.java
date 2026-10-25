@@ -2,7 +2,7 @@ package net.smartcolonies.api;
 
 import java.util.UUID;
 import net.minecraft.util.math.BlockPos;
-import net.smartcolonies.r.x1rxiy9mtu5b3h;
+import net.smartcolonies.r.ColonyRole;
 
 public interface VillageCapability {
    UUID id();
@@ -21,5 +21,5 @@ public interface VillageCapability {
 
    int cachedStone();
 
-   x1rxiy9mtu5b3h roleOf(UUID var1);
+   ColonyRole roleOf(UUID var1);
 }

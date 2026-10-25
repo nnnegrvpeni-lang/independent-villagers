@@ -9,8 +9,8 @@ import net.minecraft.entity.ai.brain.task.Task;
 import net.minecraft.entity.ai.brain.task.VillagerTaskListProvider;
 import net.minecraft.entity.ai.brain.task.WalkTowardsJobSiteTask;
 import net.minecraft.entity.passive.VillagerEntity;
-import net.smartcolonies.r.x172amoveu75vj;
-import net.smartcolonies.r.x3nymzubg04xss;
+import net.smartcolonies.r.ColonyTaskWrapper;
+import net.smartcolonies.r.ColonyConditionalTask;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -31,8 +31,8 @@ public abstract class x1zoswvuyzzw16 {
          Pair var3 = (Pair)var2.next();
          var1.add(
             var3.getSecond() instanceof MoveToTargetTask
-               ? Pair.of((Integer)var3.getFirst(), new x3nymzubg04xss((Task)var3.getSecond()))
-               : (var3.getSecond() instanceof WalkTowardsJobSiteTask ? Pair.of((Integer)var3.getFirst(), new x172amoveu75vj((Task)var3.getSecond())) : var3)
+               ? Pair.of((Integer)var3.getFirst(), new ColonyConditionalTask((Task)var3.getSecond()))
+               : (var3.getSecond() instanceof WalkTowardsJobSiteTask ? Pair.of((Integer)var3.getFirst(), new ColonyTaskWrapper((Task)var3.getSecond())) : var3)
          );
       }
 
@@ -50,7 +50,7 @@ public abstract class x1zoswvuyzzw16 {
 
       while (var2.hasNext()) {
          Pair var3 = (Pair)var2.next();
-         var1.add(Pair.of((Integer)var3.getFirst(), new x172amoveu75vj((Task)var3.getSecond())));
+         var1.add(Pair.of((Integer)var3.getFirst(), new ColonyTaskWrapper((Task)var3.getSecond())));
       }
 
       var0.setReturnValue(var1.build());

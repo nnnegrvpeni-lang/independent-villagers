@@ -3,7 +3,7 @@ package net.smartcolonies.mixin;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.entity.model.VillagerResemblingModel;
 import net.minecraft.client.render.entity.state.VillagerEntityRenderState;
-import net.smartcolonies.r.xp08rwn075i54;
+import net.smartcolonies.r.ColonyVillagerRenderState;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -36,7 +36,7 @@ public abstract class x190c0l05t9fxo {
       at = {@At("RETURN")}
    )
    private void xu7f9czin7t9e(VillagerEntityRenderState var1, CallbackInfo var2) {
-      if (var1 instanceof xp08rwn075i54 var3) {
+      if (var1 instanceof ColonyVillagerRenderState var3) {
          this.field_55117.visible = true;
          if (this.field_27527.hasChild("hat")) {
             this.field_27527.getChild("hat").visible = var3.x2wtazye3qgwz3.equippedHeadStack.isEmpty();

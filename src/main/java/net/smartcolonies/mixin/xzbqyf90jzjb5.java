@@ -8,10 +8,10 @@ import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Vec3d;
-import net.smartcolonies.r.x18ucnhocy9qn5;
-import net.smartcolonies.r.x2n55y2tom37h2;
-import net.smartcolonies.r.x37idyr79ed75m;
-import net.smartcolonies.r.xane29dnmc36y;
+import net.smartcolonies.r.ColonyMovementPlanner;
+import net.smartcolonies.r.ColonyManager;
+import net.smartcolonies.r.RaidDetectionHelper;
+import net.smartcolonies.r.VillageTagHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -25,7 +25,7 @@ public abstract class xzbqyf90jzjb5 {
    )
    private void x1z6i51xrrd3ws(ServerWorld var1, CallbackInfo var2) {
       if ((Object)this instanceof IronGolemEntity var3) {
-         Optional var4 = x2n55y2tom37h2.x3psqezd5jem54(var1, var3.getBlockPos());
+         Optional var4 = ColonyManager.x3psqezd5jem54(var1, var3.getBlockPos());
          if (var4.isPresent() && Math.floorMod(var1.getTime() + var3.getId(), 20) == 0) {
             if (var3.getHealth() < var3.getMaxHealth()) {
                var3.heal(2.0F);
@@ -39,7 +39,7 @@ public abstract class xzbqyf90jzjb5 {
             Vec3d var5 = var3.getVelocity();
             Vec3d var6 = var3.getTarget() != null ? var3.getTarget().getEntityPos() : null;
             if (var6 == null) {
-               var6 = x2n55y2tom37h2.x3psqezd5jem54(var1, var3.getBlockPos()).map(var0 -> Vec3d.ofCenter(var0.core())).orElse(var3.getEntityPos());
+               var6 = ColonyManager.x3psqezd5jem54(var1, var3.getBlockPos()).map(var0 -> Vec3d.ofCenter(var0.core())).orElse(var3.getEntityPos());
             }
 
             Vec3d var7 = var6.subtract(var3.getEntityPos());
@@ -52,24 +52,24 @@ public abstract class xzbqyf90jzjb5 {
          }
 
          if ((var1.getTime() + var3.getId()) % 4L == 0L) {
-            x2n55y2tom37h2.x3psqezd5jem54(var1, var3.getBlockPos())
+            ColonyManager.x3psqezd5jem54(var1, var3.getBlockPos())
                .ifPresent(
                   var2x -> {
-                     if (var3.getTarget() != null && !x37idyr79ed75m.xs8awvrrlhug9(var2x, var3.getTarget())) {
+                     if (var3.getTarget() != null && !RaidDetectionHelper.xs8awvrrlhug9(var2x, var3.getTarget())) {
                         var3.setTarget(null);
                         var3.getNavigation().stop();
                      }
 
                      if (var3.getTarget() instanceof VillagerEntity var3x
-                        && x2n55y2tom37h2.x3psqezd5jem54(var1, var3x.getBlockPos()).map(var1xx -> var1xx.id().equals(var2x.id())).orElse(false)) {
+                        && ColonyManager.x3psqezd5jem54(var1, var3x.getBlockPos()).map(var1xx -> var1xx.id().equals(var2x.id())).orElse(false)) {
                         var3.setTarget(null);
                      }
 
-                     x37idyr79ed75m.x3kaxmxx3tadjj(var1, var2x).ifPresent(var2xx -> {
+                     RaidDetectionHelper.x3kaxmxx3tadjj(var1, var2x).ifPresent(var2xx -> {
                         var3.setTarget(var2xx);
-                        x18ucnhocy9qn5.x1wi30zgg7nf81(var1, var3, var2xx.getBlockPos(), 1.8);
+                        ColonyMovementPlanner.x1wi30zgg7nf81(var1, var3, var2xx.getBlockPos(), 1.8);
                      });
-                     xane29dnmc36y.x1qwgvfo0xc7pp(var1, var3, var2x);
+                     VillageTagHelper.x1qwgvfo0xc7pp(var1, var3, var2x);
                   }
                );
          }

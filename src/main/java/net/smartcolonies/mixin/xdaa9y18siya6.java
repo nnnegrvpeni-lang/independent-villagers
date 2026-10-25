@@ -1,7 +1,7 @@
 package net.smartcolonies.mixin;
 
 import net.minecraft.server.MinecraftServer;
-import net.smartcolonies.r.x2n55y2tom37h2;
+import net.smartcolonies.r.ColonyManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -14,6 +14,6 @@ public abstract class xdaa9y18siya6 {
       at = {@At("TAIL")}
    )
    private void x526p2s6u4vlw(CallbackInfo var1) {
-      x2n55y2tom37h2.x35h05qb6ebno5();
+      ColonyManager.x35h05qb6ebno5();
    }
 }

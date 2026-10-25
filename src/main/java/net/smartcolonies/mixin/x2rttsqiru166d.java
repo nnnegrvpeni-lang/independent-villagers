@@ -10,10 +10,10 @@ import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.smartcolonies.r.x15kgoaq6i3m6i;
-import net.smartcolonies.r.x2n55y2tom37h2;
-import net.smartcolonies.r.x2wsungbmaexlv;
-import net.smartcolonies.r.x37idyr79ed75m;
+import net.smartcolonies.r.Colony;
+import net.smartcolonies.r.ColonyManager;
+import net.smartcolonies.r.ColonyItemUtils;
+import net.smartcolonies.r.RaidDetectionHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -36,7 +36,7 @@ public abstract class x2rttsqiru166d {
    )
    private DamageSource xjl73cpm54dpl(DamageSource var1) {
       IronGolemEntity var2 = (IronGolemEntity)(Object)this;
-      return x2wsungbmaexlv.x3fmeiovmxy173((ServerWorld)var2.getEntityWorld(), var2, this.x2vmufm3ulqp0w, var1);
+      return ColonyItemUtils.x3fmeiovmxy173((ServerWorld)var2.getEntityWorld(), var2, this.x2vmufm3ulqp0w, var1);
    }
 
    @Inject(
@@ -56,8 +56,8 @@ public abstract class x2rttsqiru166d {
    )
    private void x2vf567eyy1di4(ServerWorld var1, DamageSource var2, float var3, CallbackInfoReturnable<Boolean> var4) {
       IronGolemEntity var5 = (IronGolemEntity)(Object)this;
-      if ((Boolean)var4.getReturnValue() && var2.getAttacker() instanceof LivingEntity var6 && x37idyr79ed75m.x1bj0phudo3a5m(var6)) {
-         x2n55y2tom37h2.x3psqezd5jem54(var1, var5.getBlockPos()).ifPresent(var2x -> x37idyr79ed75m.x9xz66k4m5ee9(var1, var2x, var6));
+      if ((Boolean)var4.getReturnValue() && var2.getAttacker() instanceof LivingEntity var6 && RaidDetectionHelper.x1bj0phudo3a5m(var6)) {
+         ColonyManager.x3psqezd5jem54(var1, var5.getBlockPos()).ifPresent(var2x -> RaidDetectionHelper.x9xz66k4m5ee9(var1, var2x, var6));
       }
    }
 
@@ -80,7 +80,7 @@ public abstract class x2rttsqiru166d {
    )
    private void x4yad5k3h1d3f(ServerWorld var1, Entity var2, CallbackInfoReturnable<Boolean> var3) {
       IronGolemEntity var4 = (IronGolemEntity)(Object)this;
-      if ((Boolean)var3.getReturnValue() && var2 instanceof PlayerEntity var5 && x2n55y2tom37h2.x3psqezd5jem54(var1, var4.getBlockPos()).isPresent()) {
+      if ((Boolean)var3.getReturnValue() && var2 instanceof PlayerEntity var5 && ColonyManager.x3psqezd5jem54(var1, var4.getBlockPos()).isPresent()) {
          var5.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 60, 0), var4);
       }
 
@@ -89,8 +89,8 @@ public abstract class x2rttsqiru166d {
 
    private boolean sameColony(ServerWorld var1, VillagerEntity var2) {
       IronGolemEntity var3 = (IronGolemEntity)(Object)this;
-      Optional var4 = x2n55y2tom37h2.x3psqezd5jem54(var1, var3.getBlockPos());
-      Optional var5 = x2n55y2tom37h2.x3psqezd5jem54(var1, var2.getBlockPos());
-      return var4.isPresent() && var5.isPresent() && ((x15kgoaq6i3m6i)var4.get()).id().equals(((x15kgoaq6i3m6i)var5.get()).id());
+      Optional var4 = ColonyManager.x3psqezd5jem54(var1, var3.getBlockPos());
+      Optional var5 = ColonyManager.x3psqezd5jem54(var1, var2.getBlockPos());
+      return var4.isPresent() && var5.isPresent() && ((Colony)var4.get()).id().equals(((Colony)var5.get()).id());
    }
 }

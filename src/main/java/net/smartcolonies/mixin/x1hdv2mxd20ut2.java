@@ -6,10 +6,10 @@ import net.minecraft.entity.ai.brain.task.FarmerVillagerTask;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
-import net.smartcolonies.r.x1rxiy9mtu5b3h;
-import net.smartcolonies.r.x20rghnsl2yowl;
-import net.smartcolonies.r.x2fvuqnp9zks2x;
-import net.smartcolonies.r.x2n55y2tom37h2;
+import net.smartcolonies.r.ColonyRole;
+import net.smartcolonies.r.BuildingBlueprintHelper;
+import net.smartcolonies.r.ColonyBoundaryChecker;
+import net.smartcolonies.r.ColonyManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -24,8 +24,8 @@ public abstract class x1hdv2mxd20ut2 {
    private BlockPos field_18858;
 
    private static boolean x4944zlwr77nr(ServerWorld var0, BlockPos var1) {
-      return !x20rghnsl2yowl.x239t1m3hfi74d(var0, var1) && !x20rghnsl2yowl.x239t1m3hfi74d(var0, var1.down())
-         ? x2n55y2tom37h2.x3psqezd5jem54(var0, var1).map(var2 -> x2fvuqnp9zks2x.x14gj5yhqspcfw(var0, var2, var1.down())).orElse(true)
+      return !BuildingBlueprintHelper.x239t1m3hfi74d(var0, var1) && !BuildingBlueprintHelper.x239t1m3hfi74d(var0, var1.down())
+         ? ColonyManager.x3psqezd5jem54(var0, var1).map(var2 -> ColonyBoundaryChecker.x14gj5yhqspcfw(var0, var2, var1.down())).orElse(true)
          : false;
    }
 
@@ -46,7 +46,7 @@ public abstract class x1hdv2mxd20ut2 {
       cancellable = true
    )
    private void x3lj4iilmwwuz9(ServerWorld var1, VillagerEntity var2, long var3, CallbackInfo var5) {
-      if (x2n55y2tom37h2.x3psqezd5jem54(var1, var2.getBlockPos()).map(var1x -> var1x.roleOf(var2.getUuid()) == x1rxiy9mtu5b3h.x8jydaiei7iry).orElse(false)) {
+      if (ColonyManager.x3psqezd5jem54(var1, var2.getBlockPos()).map(var1x -> var1x.roleOf(var2.getUuid()) == ColonyRole.x8jydaiei7iry).orElse(false)) {
          var5.cancel();
       } else {
          if (this.field_18858 != null && !x4944zlwr77nr(var1, this.field_18858)) {

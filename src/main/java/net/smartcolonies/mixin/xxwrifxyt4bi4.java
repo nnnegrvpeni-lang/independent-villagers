@@ -7,7 +7,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.village.Merchant;
 import net.minecraft.village.MerchantInventory;
 import net.minecraft.village.TradeOffer;
-import net.smartcolonies.r.x1faxfib09uh4;
+import net.smartcolonies.r.ElderTradeService;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -32,7 +32,7 @@ public abstract class xxwrifxyt4bi4 {
    private void x2g0wc5ylgvp3y(int var1, CallbackInfoReturnable<ItemStack> var2) {
       if (this.field_7858 instanceof VillagerEntity var3 && var3.getEntityWorld() instanceof ServerWorld var4) {
          TradeOffer var7 = this.field_7860.getTradeOffer();
-         if (var7 != null && x1faxfib09uh4.xcynwq3uap918(var3, var7) && !x1faxfib09uh4.x1ujd85h9771yr(var4, var3, var7)) {
+         if (var7 != null && ElderTradeService.xcynwq3uap918(var3, var7) && !ElderTradeService.x1ujd85h9771yr(var4, var3, var7)) {
             var7.disable();
             this.field_7860.updateOffers();
             var2.setReturnValue(ItemStack.EMPTY);

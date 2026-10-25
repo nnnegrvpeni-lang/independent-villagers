@@ -12,8 +12,8 @@ import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.item.Items;
 import net.minecraft.util.Arm;
 import net.minecraft.util.Hand;
-import net.smartcolonies.r.x39nmg4rb9ffet;
-import net.smartcolonies.r.xp08rwn075i54;
+import net.smartcolonies.r.VillagerEquipmentFeatureRenderer;
+import net.smartcolonies.r.ColonyVillagerRenderState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -27,7 +27,7 @@ public abstract class x1e7fquls3ase6 {
       at = {@At("RETURN")}
    )
    private void x76bxvkm1m8st(Context var1, CallbackInfo var2) {
-      ((x1nggbfu6gda51)this).x3cnxfasc95h6n().add(new x39nmg4rb9ffet((FeatureRendererContext<VillagerEntityRenderState, VillagerResemblingModel>)this, var1));
+      ((x1nggbfu6gda51)this).x3cnxfasc95h6n().add(new VillagerEquipmentFeatureRenderer((FeatureRendererContext<VillagerEntityRenderState, VillagerResemblingModel>)this, var1));
    }
 
    @Inject(
@@ -36,7 +36,7 @@ public abstract class x1e7fquls3ase6 {
       cancellable = true
    )
    private void xm83jgieheh8q(CallbackInfoReturnable<VillagerEntityRenderState> var1) {
-      var1.setReturnValue(new xp08rwn075i54());
+      var1.setReturnValue(new ColonyVillagerRenderState());
    }
 
    @Inject(
@@ -44,7 +44,7 @@ public abstract class x1e7fquls3ase6 {
       at = {@At("RETURN")}
    )
    private void x2tfjfukp7hems(VillagerEntity var1, VillagerEntityRenderState var2, float var3, CallbackInfo var4) {
-      if (var2 instanceof xp08rwn075i54 var5) {
+      if (var2 instanceof ColonyVillagerRenderState var5) {
          BipedEntityRenderState var6 = var5.x2wtazye3qgwz3;
          BipedEntityRenderer.updateBipedRenderState(var1, var6, var3, ((x1nggbfu6gda51)this).x4yhpn4qlmpkl());
          var6.age = var2.age;

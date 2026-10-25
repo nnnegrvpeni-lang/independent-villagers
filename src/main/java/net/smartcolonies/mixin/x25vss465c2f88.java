@@ -5,7 +5,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.WorldChunk;
-import net.smartcolonies.r.xyghu7rojfjwk;
+import net.smartcolonies.r.ColonyWorldUtils;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -25,7 +25,7 @@ public abstract class x25vss465c2f88 {
    )
    private void x1f6pfyu5te63k(BlockPos var1, BlockState var2, int var3, CallbackInfoReturnable<BlockState> var4) {
       if (this.field_12858 instanceof ServerWorld var5) {
-         xyghu7rojfjwk.x2d89mem7j8r8n(var5, var1, (BlockState)var4.getReturnValue(), var2);
+         ColonyWorldUtils.x2d89mem7j8r8n(var5, var1, (BlockState)var4.getReturnValue(), var2);
       }
    }
 }

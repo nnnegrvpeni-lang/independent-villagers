@@ -12,7 +12,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.GlobalPos;
 import net.minecraft.world.poi.PointOfInterestType;
-import net.smartcolonies.r.x172amoveu75vj;
+import net.smartcolonies.r.ColonyTaskWrapper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -38,7 +38,7 @@ public abstract class xi49eintehzw {
          || var1 == MemoryModuleType.POTENTIAL_JOB_SITE
          || var2 == MemoryModuleType.JOB_SITE
          || var2 == MemoryModuleType.POTENTIAL_JOB_SITE) {
-         var6.setReturnValue(new x172amoveu75vj((Task)var6.getReturnValue()));
+         var6.setReturnValue(new ColonyTaskWrapper((Task)var6.getReturnValue()));
       }
    }
 }

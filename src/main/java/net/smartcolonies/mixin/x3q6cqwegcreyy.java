@@ -7,7 +7,7 @@ import net.minecraft.entity.ai.brain.task.UpdateJobSiteTask;
 import net.minecraft.entity.ai.brain.task.VillagerTaskListProvider;
 import net.minecraft.entity.ai.brain.task.WorkStationCompetitionTask;
 import net.minecraft.entity.passive.VillagerEntity;
-import net.smartcolonies.r.x172amoveu75vj;
+import net.smartcolonies.r.ColonyTaskWrapper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -22,7 +22,7 @@ public abstract class x3q6cqwegcreyy {
       )
    )
    private static Task<VillagerEntity> x3aqvzhxibwdub() {
-      return new x172amoveu75vj(LoseJobOnSiteLossTask.create());
+      return new ColonyTaskWrapper(LoseJobOnSiteLossTask.create());
    }
 
    @Redirect(
@@ -33,7 +33,7 @@ public abstract class x3q6cqwegcreyy {
       )
    )
    private static Task<VillagerEntity> x1uqnnxad94n6i() {
-      return new x172amoveu75vj(UpdateJobSiteTask.create());
+      return new ColonyTaskWrapper(UpdateJobSiteTask.create());
    }
 
    @Redirect(
@@ -44,7 +44,7 @@ public abstract class x3q6cqwegcreyy {
       )
    )
    private static Task<VillagerEntity> x1yxc4rp30so5v(float var0) {
-      return new x172amoveu75vj(TakeJobSiteTask.create(var0));
+      return new ColonyTaskWrapper(TakeJobSiteTask.create(var0));
    }
 
    @Redirect(
@@ -55,6 +55,6 @@ public abstract class x3q6cqwegcreyy {
       )
    )
    private static Task<VillagerEntity> x1beck2melv4gr() {
-      return new x172amoveu75vj(WorkStationCompetitionTask.create());
+      return new ColonyTaskWrapper(WorkStationCompetitionTask.create());
    }
 }
