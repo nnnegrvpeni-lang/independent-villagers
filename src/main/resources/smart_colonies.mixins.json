@@ -1,0 +1,39 @@
+{
+  "required": true,
+  "package": "net.smartcolonies.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "x1jxs4i1mk0ei2",
+    "x2gac63vevkbv3",
+    "xcvv14vzbvjae",
+    "x3u93owcuyb5d4",
+    "x1hdv2mxd20ut2",
+    "x2x45lao5be07n",
+    "x3jzeu04kdkziv",
+    "x12eywdeqyc6hd",
+    "x3q6cqwegcreyy",
+    "x1zoswvuyzzw16",
+    "xbfkfe2ag7erz",
+    "xul6oxgve55tu",
+    "xnknrz08jrie3",
+    "xi49eintehzw",
+    "x3urdss0barlk4",
+    "x3gehxcu4100o9",
+    "x3q50tg4x7kpfk",
+    "xzbqyf90jzjb5",
+    "x2rttsqiru166d",
+    "xmpkjxega6h0p",
+    "xuwh5eshyp5wg",
+    "x42bj8l8yz8hz",
+    "xel026uoczb07",
+    "x25n2b6nvj54yr",
+    "x25vss465c2f88",
+    "xdaa9y18siya6",
+    "x2vgik63bzhq9q",
+    "xxwrifxyt4bi4"
+  ],
+  "client": ["xalrieasfbios", "x1nggbfu6gda51", "x1e7fquls3ase6", "x190c0l05t9fxo"],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

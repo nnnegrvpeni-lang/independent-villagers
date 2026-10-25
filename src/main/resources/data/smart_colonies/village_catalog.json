@@ -1,0 +1,1112 @@
+{
+  "savanna": {
+    "buildings": [],
+    "homes": [
+      "medium_house_1",
+      "medium_house_2",
+      "small_house_1",
+      "small_house_2",
+      "small_house_3",
+      "small_house_4",
+      "small_house_5",
+      "small_house_6",
+      "small_house_7",
+      "small_house_8"
+    ],
+    "all": [
+      "armorer_1",
+      "butchers_shop_1",
+      "butchers_shop_2",
+      "cartographer_1",
+      "fisher_cottage_1",
+      "fletcher_house_1",
+      "library_1",
+      "mason_1",
+      "medium_house_1",
+      "medium_house_2",
+      "shepherd_1",
+      "small_house_1",
+      "small_house_2",
+      "small_house_3",
+      "small_house_4",
+      "small_house_5",
+      "small_house_6",
+      "small_house_7",
+      "small_house_8",
+      "tannery_1",
+      "temple_1",
+      "temple_2",
+      "tool_smith_1",
+      "weaponsmith_1",
+      "weaponsmith_2"
+    ],
+    "infrastructure": [
+      "village/savanna/infrastructure/savanna/town_centers/savanna_meeting_point_1",
+      "village/savanna/infrastructure/savanna/town_centers/savanna_meeting_point_2",
+      "village/savanna/infrastructure/savanna/town_centers/savanna_meeting_point_3",
+      "village/savanna/infrastructure/savanna/town_centers/savanna_meeting_point_4",
+      "village/savanna/infrastructure/savanna/zombie/town_centers/savanna_meeting_point_1",
+      "village/savanna/infrastructure/savanna/zombie/town_centers/savanna_meeting_point_2",
+      "village/savanna/infrastructure/savanna/zombie/town_centers/savanna_meeting_point_3",
+      "village/savanna/infrastructure/savanna/zombie/town_centers/savanna_meeting_point_4",
+      "village/savanna/infrastructure/savanna/houses/savanna_large_farm_1",
+      "village/savanna/infrastructure/savanna/houses/savanna_large_farm_2",
+      "village/savanna/infrastructure/savanna/houses/savanna_small_farm",
+      "village/savanna/infrastructure/savanna/houses/savanna_animal_pen_1",
+      "village/savanna/infrastructure/savanna/houses/savanna_animal_pen_2",
+      "village/savanna/infrastructure/savanna/houses/savanna_animal_pen_3",
+      "village/savanna/infrastructure/savanna/streets/corner_01",
+      "village/savanna/infrastructure/savanna/streets/corner_03",
+      "village/savanna/infrastructure/savanna/streets/straight_02",
+      "village/savanna/infrastructure/savanna/streets/straight_04",
+      "village/savanna/infrastructure/savanna/streets/straight_05",
+      "village/savanna/infrastructure/savanna/streets/straight_06",
+      "village/savanna/infrastructure/savanna/streets/straight_08",
+      "village/savanna/infrastructure/savanna/streets/straight_09",
+      "village/savanna/infrastructure/savanna/streets/straight_10",
+      "village/savanna/infrastructure/savanna/streets/straight_11",
+      "village/savanna/infrastructure/savanna/streets/crossroad_02",
+      "village/savanna/infrastructure/savanna/streets/crossroad_03",
+      "village/savanna/infrastructure/savanna/streets/crossroad_04",
+      "village/savanna/infrastructure/savanna/streets/crossroad_05",
+      "village/savanna/infrastructure/savanna/streets/crossroad_06",
+      "village/savanna/infrastructure/savanna/streets/crossroad_07",
+      "village/savanna/infrastructure/savanna/streets/split_01",
+      "village/savanna/infrastructure/savanna/streets/split_02",
+      "village/savanna/infrastructure/savanna/streets/turn_01",
+      "village/savanna/infrastructure/savanna/savanna_lamp_post_01",
+      "village/savanna/infrastructure/plains/terminators/terminator_01",
+      "village/savanna/infrastructure/plains/terminators/terminator_02",
+      "village/savanna/infrastructure/plains/terminators/terminator_03",
+      "village/savanna/infrastructure/plains/terminators/terminator_04",
+      "village/savanna/infrastructure/savanna/terminators/terminator_05",
+      "village/savanna/infrastructure/savanna/zombie/streets/corner_01",
+      "village/savanna/infrastructure/savanna/zombie/streets/corner_03",
+      "village/savanna/infrastructure/savanna/zombie/streets/straight_02",
+      "village/savanna/infrastructure/savanna/zombie/streets/straight_04",
+      "village/savanna/infrastructure/savanna/zombie/streets/straight_05",
+      "village/savanna/infrastructure/savanna/zombie/streets/straight_06",
+      "village/savanna/infrastructure/savanna/zombie/streets/straight_08",
+      "village/savanna/infrastructure/savanna/zombie/streets/straight_09",
+      "village/savanna/infrastructure/savanna/zombie/streets/straight_10",
+      "village/savanna/infrastructure/savanna/zombie/streets/straight_11",
+      "village/savanna/infrastructure/savanna/zombie/streets/crossroad_02",
+      "village/savanna/infrastructure/savanna/zombie/streets/crossroad_03",
+      "village/savanna/infrastructure/savanna/zombie/streets/crossroad_04",
+      "village/savanna/infrastructure/savanna/zombie/streets/crossroad_05",
+      "village/savanna/infrastructure/savanna/zombie/streets/crossroad_06",
+      "village/savanna/infrastructure/savanna/zombie/streets/crossroad_07",
+      "village/savanna/infrastructure/savanna/zombie/streets/split_01",
+      "village/savanna/infrastructure/savanna/zombie/streets/split_02",
+      "village/savanna/infrastructure/savanna/zombie/streets/turn_01",
+      "village/savanna/infrastructure/savanna/zombie/terminators/terminator_05",
+      "village/savanna/infrastructure/savanna/zombie/houses/savanna_large_farm_2",
+      "village/savanna/infrastructure/savanna/zombie/houses/savanna_animal_pen_2",
+      "village/savanna/infrastructure/savanna/zombie/houses/savanna_animal_pen_3"
+    ],
+    "pools": [
+      "data/minecraft/worldgen/template_pool/village/savanna/town_centers.json",
+      "data/minecraft/worldgen/template_pool/village/savanna/houses.json",
+      "data/minecraft/worldgen/template_pool/village/savanna/streets.json",
+      "data/minecraft/worldgen/template_pool/village/savanna/trees.json",
+      "data/minecraft/worldgen/template_pool/village/savanna/decor.json",
+      "data/minecraft/worldgen/template_pool/village/savanna/terminators.json",
+      "data/minecraft/worldgen/template_pool/village/savanna/zombie/streets.json",
+      "data/minecraft/worldgen/template_pool/village/savanna/zombie/decor.json",
+      "data/minecraft/worldgen/template_pool/village/savanna/zombie/terminators.json",
+      "data/minecraft/worldgen/template_pool/village/savanna/zombie/houses.json"
+    ]
+  },
+  "plains": {
+    "buildings": [
+      {
+        "id": "armorer_house_1",
+        "size": [
+          11,
+          10,
+          11
+        ],
+        "beds": 0
+      },
+      {
+        "id": "big_house_1",
+        "size": [
+          15,
+          9,
+          13
+        ],
+        "beds": 4
+      },
+      {
+        "id": "butcher_shop_1",
+        "size": [
+          13,
+          10,
+          17
+        ],
+        "beds": 0
+      },
+      {
+        "id": "butcher_shop_2",
+        "size": [
+          15,
+          10,
+          17
+        ],
+        "beds": 0
+      },
+      {
+        "id": "cartographer_1",
+        "size": [
+          11,
+          10,
+          12
+        ],
+        "beds": 0
+      },
+      {
+        "id": "fisher_cottage_1",
+        "size": [
+          15,
+          9,
+          13
+        ],
+        "beds": 0
+      },
+      {
+        "id": "fletcher_house_1",
+        "size": [
+          13,
+          11,
+          11
+        ],
+        "beds": 0
+      },
+      {
+        "id": "library_1",
+        "size": [
+          15,
+          9,
+          11
+        ],
+        "beds": 0
+      },
+      {
+        "id": "library_2",
+        "size": [
+          15,
+          9,
+          11
+        ],
+        "beds": 0
+      },
+      {
+        "id": "masons_house_1",
+        "size": [
+          15,
+          10,
+          12
+        ],
+        "beds": 0
+      },
+      {
+        "id": "medium_house_1",
+        "size": [
+          17,
+          10,
+          13
+        ],
+        "beds": 4
+      },
+      {
+        "id": "medium_house_2",
+        "size": [
+          15,
+          9,
+          13
+        ],
+        "beds": 4
+      },
+      {
+        "id": "shepherds_house_1",
+        "size": [
+          19,
+          7,
+          17
+        ],
+        "beds": 0
+      },
+      {
+        "id": "small_house_1",
+        "size": [
+          7,
+          8,
+          9
+        ],
+        "beds": 1
+      },
+      {
+        "id": "small_house_2",
+        "size": [
+          11,
+          8,
+          10
+        ],
+        "beds": 2
+      },
+      {
+        "id": "small_house_3",
+        "size": [
+          9,
+          9,
+          12
+        ],
+        "beds": 2
+      },
+      {
+        "id": "small_house_4",
+        "size": [
+          13,
+          9,
+          11
+        ],
+        "beds": 2
+      },
+      {
+        "id": "small_house_5",
+        "size": [
+          9,
+          9,
+          11
+        ],
+        "beds": 2
+      },
+      {
+        "id": "small_house_6",
+        "size": [
+          11,
+          9,
+          11
+        ],
+        "beds": 2
+      },
+      {
+        "id": "small_house_7",
+        "size": [
+          13,
+          12,
+          11
+        ],
+        "beds": 3
+      },
+      {
+        "id": "small_house_8",
+        "size": [
+          9,
+          7,
+          9
+        ],
+        "beds": 1
+      },
+      {
+        "id": "tannery_1",
+        "size": [
+          13,
+          9,
+          12
+        ],
+        "beds": 0
+      },
+      {
+        "id": "temple_3",
+        "size": [
+          15,
+          7,
+          12
+        ],
+        "beds": 0
+      },
+      {
+        "id": "temple_4",
+        "size": [
+          15,
+          7,
+          12
+        ],
+        "beds": 0
+      },
+      {
+        "id": "tool_smith_1",
+        "size": [
+          11,
+          10,
+          12
+        ],
+        "beds": 0
+      },
+      {
+        "id": "weaponsmith_1",
+        "size": [
+          11,
+          9,
+          11
+        ],
+        "beds": 0
+      }
+    ],
+    "homes": [
+      "big_house_1",
+      "medium_house_1",
+      "medium_house_2",
+      "small_house_1",
+      "small_house_2",
+      "small_house_3",
+      "small_house_4",
+      "small_house_5",
+      "small_house_6",
+      "small_house_7",
+      "small_house_8"
+    ],
+    "all": [
+      "armorer_house_1",
+      "big_house_1",
+      "butcher_shop_1",
+      "butcher_shop_2",
+      "cartographer_1",
+      "fisher_cottage_1",
+      "fletcher_house_1",
+      "library_1",
+      "library_2",
+      "masons_house_1",
+      "medium_house_1",
+      "medium_house_2",
+      "shepherds_house_1",
+      "small_house_1",
+      "small_house_2",
+      "small_house_3",
+      "small_house_4",
+      "small_house_5",
+      "small_house_6",
+      "small_house_7",
+      "small_house_8",
+      "tannery_1",
+      "temple_3",
+      "temple_4",
+      "tool_smith_1",
+      "weaponsmith_1"
+    ],
+    "infrastructure": [
+      "village/plains/infrastructure/plains/town_centers/plains_fountain_01",
+      "village/plains/infrastructure/plains/town_centers/plains_meeting_point_1",
+      "village/plains/infrastructure/plains/town_centers/plains_meeting_point_2",
+      "village/plains/infrastructure/plains/town_centers/plains_meeting_point_3",
+      "village/plains/infrastructure/plains/zombie/town_centers/plains_fountain_01",
+      "village/plains/infrastructure/plains/zombie/town_centers/plains_meeting_point_1",
+      "village/plains/infrastructure/plains/zombie/town_centers/plains_meeting_point_2",
+      "village/plains/infrastructure/plains/zombie/town_centers/plains_meeting_point_3",
+      "village/plains/infrastructure/plains/houses/plains_stable_1",
+      "village/plains/infrastructure/plains/houses/plains_stable_2",
+      "village/plains/infrastructure/plains/houses/plains_large_farm_1",
+      "village/plains/infrastructure/plains/houses/plains_small_farm_1",
+      "village/plains/infrastructure/plains/houses/plains_animal_pen_1",
+      "village/plains/infrastructure/plains/houses/plains_animal_pen_2",
+      "village/plains/infrastructure/plains/houses/plains_animal_pen_3",
+      "village/plains/infrastructure/plains/houses/plains_accessory_1",
+      "village/plains/infrastructure/plains/houses/plains_meeting_point_4",
+      "village/plains/infrastructure/plains/houses/plains_meeting_point_5",
+      "village/plains/infrastructure/plains/plains_lamp_1",
+      "village/plains/infrastructure/plains/streets/corner_01",
+      "village/plains/infrastructure/plains/streets/corner_02",
+      "village/plains/infrastructure/plains/streets/corner_03",
+      "village/plains/infrastructure/plains/streets/straight_01",
+      "village/plains/infrastructure/plains/streets/straight_02",
+      "village/plains/infrastructure/plains/streets/straight_03",
+      "village/plains/infrastructure/plains/streets/straight_04",
+      "village/plains/infrastructure/plains/streets/straight_05",
+      "village/plains/infrastructure/plains/streets/straight_06",
+      "village/plains/infrastructure/plains/streets/crossroad_01",
+      "village/plains/infrastructure/plains/streets/crossroad_02",
+      "village/plains/infrastructure/plains/streets/crossroad_03",
+      "village/plains/infrastructure/plains/streets/crossroad_04",
+      "village/plains/infrastructure/plains/streets/crossroad_05",
+      "village/plains/infrastructure/plains/streets/crossroad_06",
+      "village/plains/infrastructure/plains/streets/turn_01",
+      "village/plains/infrastructure/plains/terminators/terminator_01",
+      "village/plains/infrastructure/plains/terminators/terminator_02",
+      "village/plains/infrastructure/plains/terminators/terminator_03",
+      "village/plains/infrastructure/plains/terminators/terminator_04",
+      "village/plains/infrastructure/plains/zombie/streets/corner_01",
+      "village/plains/infrastructure/plains/zombie/streets/corner_02",
+      "village/plains/infrastructure/plains/zombie/streets/corner_03",
+      "village/plains/infrastructure/plains/zombie/streets/straight_01",
+      "village/plains/infrastructure/plains/zombie/streets/straight_02",
+      "village/plains/infrastructure/plains/zombie/streets/straight_03",
+      "village/plains/infrastructure/plains/zombie/streets/straight_04",
+      "village/plains/infrastructure/plains/zombie/streets/straight_05",
+      "village/plains/infrastructure/plains/zombie/streets/straight_06",
+      "village/plains/infrastructure/plains/zombie/streets/crossroad_01",
+      "village/plains/infrastructure/plains/zombie/streets/crossroad_02",
+      "village/plains/infrastructure/plains/zombie/streets/crossroad_03",
+      "village/plains/infrastructure/plains/zombie/streets/crossroad_04",
+      "village/plains/infrastructure/plains/zombie/streets/crossroad_05",
+      "village/plains/infrastructure/plains/zombie/streets/crossroad_06",
+      "village/plains/infrastructure/plains/zombie/streets/turn_01",
+      "village/plains/infrastructure/plains/zombie/houses/plains_stable_1",
+      "village/plains/infrastructure/plains/zombie/houses/plains_animal_pen_3",
+      "village/plains/infrastructure/plains/zombie/houses/plains_meeting_point_4",
+      "village/plains/infrastructure/plains/zombie/houses/plains_meeting_point_5"
+    ],
+    "pools": [
+      "data/minecraft/worldgen/template_pool/village/plains/town_centers.json",
+      "data/minecraft/worldgen/template_pool/village/plains/trees.json",
+      "data/minecraft/worldgen/template_pool/village/plains/houses.json",
+      "data/minecraft/worldgen/template_pool/village/plains/decor.json",
+      "data/minecraft/worldgen/template_pool/village/plains/streets.json",
+      "data/minecraft/worldgen/template_pool/village/plains/terminators.json",
+      "data/minecraft/worldgen/template_pool/village/plains/zombie/decor.json",
+      "data/minecraft/worldgen/template_pool/village/plains/zombie/streets.json",
+      "data/minecraft/worldgen/template_pool/village/plains/zombie/houses.json"
+    ]
+  },
+  "desert": {
+    "buildings": [
+      {
+        "id": "armorer_1",
+        "size": [
+          11,
+          8,
+          11
+        ],
+        "beds": 0
+      },
+      {
+        "id": "butcher_shop_1",
+        "size": [
+          13,
+          8,
+          17
+        ],
+        "beds": 0
+      },
+      {
+        "id": "cartographer_house_1",
+        "size": [
+          11,
+          9,
+          12
+        ],
+        "beds": 0
+      },
+      {
+        "id": "fisher_1",
+        "size": [
+          15,
+          6,
+          13
+        ],
+        "beds": 0
+      },
+      {
+        "id": "fletcher_house_1",
+        "size": [
+          13,
+          6,
+          11
+        ],
+        "beds": 0
+      },
+      {
+        "id": "library_1",
+        "size": [
+          15,
+          6,
+          11
+        ],
+        "beds": 0
+      },
+      {
+        "id": "mason_1",
+        "size": [
+          15,
+          6,
+          12
+        ],
+        "beds": 0
+      },
+      {
+        "id": "medium_house_1",
+        "size": [
+          17,
+          8,
+          13
+        ],
+        "beds": 4
+      },
+      {
+        "id": "medium_house_2",
+        "size": [
+          15,
+          8,
+          13
+        ],
+        "beds": 4
+      },
+      {
+        "id": "shepherd_house_1",
+        "size": [
+          19,
+          6,
+          17
+        ],
+        "beds": 0
+      },
+      {
+        "id": "small_house_1",
+        "size": [
+          9,
+          6,
+          10
+        ],
+        "beds": 1
+      },
+      {
+        "id": "small_house_2",
+        "size": [
+          13,
+          6,
+          9
+        ],
+        "beds": 2
+      },
+      {
+        "id": "small_house_3",
+        "size": [
+          11,
+          8,
+          11
+        ],
+        "beds": 2
+      },
+      {
+        "id": "small_house_4",
+        "size": [
+          13,
+          8,
+          11
+        ],
+        "beds": 2
+      },
+      {
+        "id": "small_house_5",
+        "size": [
+          9,
+          8,
+          11
+        ],
+        "beds": 2
+      },
+      {
+        "id": "small_house_6",
+        "size": [
+          11,
+          8,
+          11
+        ],
+        "beds": 2
+      },
+      {
+        "id": "small_house_7",
+        "size": [
+          13,
+          6,
+          12
+        ],
+        "beds": 3
+      },
+      {
+        "id": "small_house_8",
+        "size": [
+          9,
+          6,
+          9
+        ],
+        "beds": 1
+      },
+      {
+        "id": "tannery_1",
+        "size": [
+          13,
+          6,
+          12
+        ],
+        "beds": 0
+      },
+      {
+        "id": "temple_1",
+        "size": [
+          15,
+          10,
+          12
+        ],
+        "beds": 0
+      },
+      {
+        "id": "temple_2",
+        "size": [
+          11,
+          10,
+          12
+        ],
+        "beds": 0
+      },
+      {
+        "id": "tool_smith_1",
+        "size": [
+          11,
+          8,
+          12
+        ],
+        "beds": 0
+      },
+      {
+        "id": "weaponsmith_1",
+        "size": [
+          11,
+          8,
+          11
+        ],
+        "beds": 0
+      }
+    ],
+    "homes": [
+      "medium_house_1",
+      "medium_house_2",
+      "small_house_1",
+      "small_house_2",
+      "small_house_3",
+      "small_house_4",
+      "small_house_5",
+      "small_house_6",
+      "small_house_7",
+      "small_house_8"
+    ],
+    "all": [
+      "armorer_1",
+      "butcher_shop_1",
+      "cartographer_house_1",
+      "fisher_1",
+      "fletcher_house_1",
+      "library_1",
+      "mason_1",
+      "medium_house_1",
+      "medium_house_2",
+      "shepherd_house_1",
+      "small_house_1",
+      "small_house_2",
+      "small_house_3",
+      "small_house_4",
+      "small_house_5",
+      "small_house_6",
+      "small_house_7",
+      "small_house_8",
+      "tannery_1",
+      "temple_1",
+      "temple_2",
+      "tool_smith_1",
+      "weaponsmith_1"
+    ],
+    "infrastructure": [
+      "village/desert/infrastructure/desert/town_centers/desert_meeting_point_1",
+      "village/desert/infrastructure/desert/town_centers/desert_meeting_point_2",
+      "village/desert/infrastructure/desert/town_centers/desert_meeting_point_3",
+      "village/desert/infrastructure/desert/zombie/town_centers/desert_meeting_point_1",
+      "village/desert/infrastructure/desert/zombie/town_centers/desert_meeting_point_2",
+      "village/desert/infrastructure/desert/zombie/town_centers/desert_meeting_point_3",
+      "village/desert/infrastructure/desert/houses/desert_large_farm_1",
+      "village/desert/infrastructure/desert/houses/desert_farm_1",
+      "village/desert/infrastructure/desert/houses/desert_farm_2",
+      "village/desert/infrastructure/desert/houses/desert_animal_pen_1",
+      "village/desert/infrastructure/desert/houses/desert_animal_pen_2",
+      "village/desert/infrastructure/desert/camel_spawn",
+      "village/desert/infrastructure/desert/streets/corner_01",
+      "village/desert/infrastructure/desert/streets/corner_02",
+      "village/desert/infrastructure/desert/streets/straight_01",
+      "village/desert/infrastructure/desert/streets/straight_02",
+      "village/desert/infrastructure/desert/streets/straight_03",
+      "village/desert/infrastructure/desert/streets/crossroad_01",
+      "village/desert/infrastructure/desert/streets/crossroad_02",
+      "village/desert/infrastructure/desert/streets/crossroad_03",
+      "village/desert/infrastructure/desert/streets/square_01",
+      "village/desert/infrastructure/desert/streets/square_02",
+      "village/desert/infrastructure/desert/streets/turn_01",
+      "village/desert/infrastructure/desert/desert_lamp_1",
+      "village/desert/infrastructure/desert/zombie/streets/corner_01",
+      "village/desert/infrastructure/desert/zombie/streets/corner_02",
+      "village/desert/infrastructure/desert/zombie/streets/straight_01",
+      "village/desert/infrastructure/desert/zombie/streets/straight_02",
+      "village/desert/infrastructure/desert/zombie/streets/straight_03",
+      "village/desert/infrastructure/desert/zombie/streets/crossroad_01",
+      "village/desert/infrastructure/desert/zombie/streets/crossroad_02",
+      "village/desert/infrastructure/desert/zombie/streets/crossroad_03",
+      "village/desert/infrastructure/desert/zombie/streets/square_01",
+      "village/desert/infrastructure/desert/zombie/streets/square_02",
+      "village/desert/infrastructure/desert/zombie/streets/turn_01",
+      "village/desert/infrastructure/desert/terminators/terminator_01",
+      "village/desert/infrastructure/desert/zombie/terminators/terminator_02",
+      "village/desert/infrastructure/desert/terminators/terminator_02"
+    ],
+    "pools": [
+      "data/minecraft/worldgen/template_pool/village/desert/town_centers.json",
+      "data/minecraft/worldgen/template_pool/village/desert/houses.json",
+      "data/minecraft/worldgen/template_pool/village/desert/camel.json",
+      "data/minecraft/worldgen/template_pool/village/desert/streets.json",
+      "data/minecraft/worldgen/template_pool/village/desert/decor.json",
+      "data/minecraft/worldgen/template_pool/village/desert/zombie/houses.json",
+      "data/minecraft/worldgen/template_pool/village/desert/zombie/decor.json",
+      "data/minecraft/worldgen/template_pool/village/desert/zombie/streets.json",
+      "data/minecraft/worldgen/template_pool/village/desert/zombie/terminators.json",
+      "data/minecraft/worldgen/template_pool/village/desert/terminators.json"
+    ]
+  },
+  "snowy": {
+    "buildings": [
+      {
+        "id": "armorer_house_1",
+        "size": [
+          11,
+          10,
+          11
+        ],
+        "beds": 0
+      },
+      {
+        "id": "armorer_house_2",
+        "size": [
+          11,
+          10,
+          11
+        ],
+        "beds": 0
+      },
+      {
+        "id": "butchers_shop_1",
+        "size": [
+          13,
+          10,
+          17
+        ],
+        "beds": 0
+      },
+      {
+        "id": "butchers_shop_2",
+        "size": [
+          15,
+          10,
+          17
+        ],
+        "beds": 0
+      },
+      {
+        "id": "cartographer_house_1",
+        "size": [
+          11,
+          10,
+          12
+        ],
+        "beds": 0
+      },
+      {
+        "id": "fisher_cottage",
+        "size": [
+          15,
+          10,
+          13
+        ],
+        "beds": 0
+      },
+      {
+        "id": "fletcher_house_1",
+        "size": [
+          13,
+          11,
+          11
+        ],
+        "beds": 0
+      },
+      {
+        "id": "library_1",
+        "size": [
+          15,
+          9,
+          11
+        ],
+        "beds": 0
+      },
+      {
+        "id": "masons_house_1",
+        "size": [
+          15,
+          10,
+          12
+        ],
+        "beds": 0
+      },
+      {
+        "id": "masons_house_2",
+        "size": [
+          15,
+          10,
+          12
+        ],
+        "beds": 0
+      },
+      {
+        "id": "medium_house_1",
+        "size": [
+          17,
+          10,
+          13
+        ],
+        "beds": 4
+      },
+      {
+        "id": "medium_house_2",
+        "size": [
+          15,
+          9,
+          13
+        ],
+        "beds": 4
+      },
+      {
+        "id": "medium_house_3",
+        "size": [
+          11,
+          10,
+          12
+        ],
+        "beds": 3
+      },
+      {
+        "id": "shepherds_house_1",
+        "size": [
+          19,
+          9,
+          17
+        ],
+        "beds": 0
+      },
+      {
+        "id": "small_house_1",
+        "size": [
+          7,
+          8,
+          9
+        ],
+        "beds": 1
+      },
+      {
+        "id": "small_house_2",
+        "size": [
+          9,
+          8,
+          10
+        ],
+        "beds": 2
+      },
+      {
+        "id": "small_house_3",
+        "size": [
+          7,
+          9,
+          12
+        ],
+        "beds": 2
+      },
+      {
+        "id": "small_house_4",
+        "size": [
+          13,
+          9,
+          11
+        ],
+        "beds": 2
+      },
+      {
+        "id": "small_house_5",
+        "size": [
+          9,
+          9,
+          11
+        ],
+        "beds": 2
+      },
+      {
+        "id": "small_house_6",
+        "size": [
+          11,
+          9,
+          11
+        ],
+        "beds": 2
+      },
+      {
+        "id": "small_house_7",
+        "size": [
+          11,
+          10,
+          12
+        ],
+        "beds": 3
+      },
+      {
+        "id": "small_house_8",
+        "size": [
+          9,
+          8,
+          9
+        ],
+        "beds": 1
+      },
+      {
+        "id": "tannery_1",
+        "size": [
+          13,
+          9,
+          12
+        ],
+        "beds": 0
+      },
+      {
+        "id": "temple_1",
+        "size": [
+          15,
+          9,
+          12
+        ],
+        "beds": 0
+      },
+      {
+        "id": "tool_smith_1",
+        "size": [
+          11,
+          10,
+          12
+        ],
+        "beds": 0
+      },
+      {
+        "id": "weapon_smith_1",
+        "size": [
+          11,
+          9,
+          11
+        ],
+        "beds": 0
+      }
+    ],
+    "homes": [
+      "medium_house_1",
+      "medium_house_2",
+      "medium_house_3",
+      "small_house_1",
+      "small_house_2",
+      "small_house_3",
+      "small_house_4",
+      "small_house_5",
+      "small_house_6",
+      "small_house_7",
+      "small_house_8"
+    ],
+    "all": [
+      "armorer_house_1",
+      "armorer_house_2",
+      "butchers_shop_1",
+      "butchers_shop_2",
+      "cartographer_house_1",
+      "fisher_cottage",
+      "fletcher_house_1",
+      "library_1",
+      "masons_house_1",
+      "masons_house_2",
+      "medium_house_1",
+      "medium_house_2",
+      "medium_house_3",
+      "shepherds_house_1",
+      "small_house_1",
+      "small_house_2",
+      "small_house_3",
+      "small_house_4",
+      "small_house_5",
+      "small_house_6",
+      "small_house_7",
+      "small_house_8",
+      "tannery_1",
+      "temple_1",
+      "tool_smith_1",
+      "weapon_smith_1"
+    ],
+    "infrastructure": [
+      "village/snowy/infrastructure/snowy/snowy_lamp_post_01",
+      "village/snowy/infrastructure/snowy/snowy_lamp_post_02",
+      "village/snowy/infrastructure/snowy/snowy_lamp_post_03",
+      "village/snowy/infrastructure/snowy/streets/corner_01",
+      "village/snowy/infrastructure/snowy/streets/corner_02",
+      "village/snowy/infrastructure/snowy/streets/corner_03",
+      "village/snowy/infrastructure/snowy/streets/square_01",
+      "village/snowy/infrastructure/snowy/streets/straight_01",
+      "village/snowy/infrastructure/snowy/streets/straight_02",
+      "village/snowy/infrastructure/snowy/streets/straight_03",
+      "village/snowy/infrastructure/snowy/streets/straight_04",
+      "village/snowy/infrastructure/snowy/streets/straight_06",
+      "village/snowy/infrastructure/snowy/streets/straight_08",
+      "village/snowy/infrastructure/snowy/streets/crossroad_02",
+      "village/snowy/infrastructure/snowy/streets/crossroad_03",
+      "village/snowy/infrastructure/snowy/streets/crossroad_04",
+      "village/snowy/infrastructure/snowy/streets/crossroad_05",
+      "village/snowy/infrastructure/snowy/streets/crossroad_06",
+      "village/snowy/infrastructure/snowy/streets/turn_01",
+      "village/snowy/infrastructure/snowy/houses/snowy_farm_1",
+      "village/snowy/infrastructure/snowy/houses/snowy_farm_2",
+      "village/snowy/infrastructure/snowy/houses/snowy_animal_pen_1",
+      "village/snowy/infrastructure/snowy/houses/snowy_animal_pen_2",
+      "village/snowy/infrastructure/plains/terminators/terminator_01",
+      "village/snowy/infrastructure/plains/terminators/terminator_02",
+      "village/snowy/infrastructure/plains/terminators/terminator_03",
+      "village/snowy/infrastructure/plains/terminators/terminator_04",
+      "village/snowy/infrastructure/snowy/town_centers/snowy_meeting_point_1",
+      "village/snowy/infrastructure/snowy/town_centers/snowy_meeting_point_2",
+      "village/snowy/infrastructure/snowy/town_centers/snowy_meeting_point_3",
+      "village/snowy/infrastructure/snowy/zombie/town_centers/snowy_meeting_point_1",
+      "village/snowy/infrastructure/snowy/zombie/town_centers/snowy_meeting_point_2",
+      "village/snowy/infrastructure/snowy/zombie/town_centers/snowy_meeting_point_3",
+      "village/snowy/infrastructure/snowy/zombie/streets/corner_01",
+      "village/snowy/infrastructure/snowy/zombie/streets/corner_02",
+      "village/snowy/infrastructure/snowy/zombie/streets/corner_03",
+      "village/snowy/infrastructure/snowy/zombie/streets/square_01",
+      "village/snowy/infrastructure/snowy/zombie/streets/straight_01",
+      "village/snowy/infrastructure/snowy/zombie/streets/straight_02",
+      "village/snowy/infrastructure/snowy/zombie/streets/straight_03",
+      "village/snowy/infrastructure/snowy/zombie/streets/straight_04",
+      "village/snowy/infrastructure/snowy/zombie/streets/straight_06",
+      "village/snowy/infrastructure/snowy/zombie/streets/straight_08",
+      "village/snowy/infrastructure/snowy/zombie/streets/crossroad_02",
+      "village/snowy/infrastructure/snowy/zombie/streets/crossroad_03",
+      "village/snowy/infrastructure/snowy/zombie/streets/crossroad_04",
+      "village/snowy/infrastructure/snowy/zombie/streets/crossroad_05",
+      "village/snowy/infrastructure/snowy/zombie/streets/crossroad_06",
+      "village/snowy/infrastructure/snowy/zombie/streets/turn_01"
+    ],
+    "pools": [
+      "data/minecraft/worldgen/template_pool/village/snowy/decor.json",
+      "data/minecraft/worldgen/template_pool/village/snowy/streets.json",
+      "data/minecraft/worldgen/template_pool/village/snowy/houses.json",
+      "data/minecraft/worldgen/template_pool/village/snowy/terminators.json",
+      "data/minecraft/worldgen/template_pool/village/snowy/trees.json",
+      "data/minecraft/worldgen/template_pool/village/snowy/town_centers.json",
+      "data/minecraft/worldgen/template_pool/village/snowy/zombie/houses.json",
+      "data/minecraft/worldgen/template_pool/village/snowy/zombie/streets.json",
+      "data/minecraft/worldgen/template_pool/village/snowy/zombie/decor.json"
+    ]
+  }
+}

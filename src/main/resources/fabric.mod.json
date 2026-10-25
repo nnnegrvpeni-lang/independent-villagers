@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "smart_colonies",
+  "version": "1.0.20-beta.40",
+  "name": "Independent Villagers 1.21.11 fabric",
+  "description": "Autonomous colony behavior for vanilla villagers.",
+  "authors": ["OceanofGames"],
+  "license": "All Rights Reserved",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["net.smartcolonies.SmartColoniesMod"]
+  },
+  "mixins": ["smart_colonies.mixins.json"],
+  "depends": {
+    "fabricloader": ">=0.18.4",
+    "minecraft": "~1.21.11",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}

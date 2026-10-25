@@ -1,0 +1,89 @@
+INDEPENDENT VILLAGERS PROPRIETARY LICENSE
+License revision: 2026-10-15
+
+Copyright (c) 2026 OceanofGames. All rights reserved.
+
+1. OWNERSHIP AND SCOPE
+
+OceanofGames (the "Copyright Holder") retains all rights in the original
+Independent Villagers code, assets, and documentation owned by the Copyright
+Holder (the "Mod"). No ownership is transferred to the user. This is not an
+open-source license.
+
+Minecraft, Mojang, Microsoft, Fabric, and third-party code, assets, and
+components are not claimed as the Copyright Holder's property. Their rights
+and applicable licenses remain unaffected. This license grants no rights
+in those third-party materials.
+
+2. LIMITED PERMISSION TO PLAY
+
+The Copyright Holder grants the lawful recipient of an official, unmodified
+copy a non-exclusive, non-transferable, worldwide permission to download,
+install, store, and run that copy solely for personal, non-commercial
+gameplay. Copies technically necessary for that permitted use are allowed.
+This permission lasts for the applicable copyright term unless terminated
+under section 5. No redistribution or sublicensing permission is granted.
+
+Normal changes to the Mod's documented user configuration and player-created
+world data during permitted gameplay are not modifications of the Mod's code.
+
+3. RESTRICTIONS
+
+Except with the Copyright Holder's prior written authorization, or to the
+extent expressly permitted by mandatory applicable law under section 4,
+the user must not:
+
+(a) Reverse engineer, decompile, disassemble, translate object code into
+source code, or otherwise extract or reconstruct the Mod's code.
+
+(b) Publish, share, upload, sell, or otherwise distribute the Mod's source
+code, extracted code, decompiled code, or protected portions of such code.
+
+(c) Modify, adapt, port, patch, or create derivative versions of the Mod,
+including modified JAR files and versions for other game versions or loaders.
+
+(d) Redistribute, mirror, re-upload, lend, sell, sublicense, or make the Mod
+or any protected part available to others, whether unchanged or modified,
+free of charge or for payment. This includes bundling copies in modpacks,
+archives, installers, and download services.
+
+(e) Remove or falsify authorship, copyright, license, or release-signature
+notices, claim authorship of the Mod, or present modified copies as official.
+
+(f) Bypass or remove the Mod's code-protection or integrity mechanisms for
+an otherwise prohibited use.
+
+A link to an official download page, without hosting or transmitting a copy
+of the Mod, is not redistribution of the Mod under this license.
+Permission to play is not permission to extract, modify, or redistribute code.
+No permission beyond the express grant in section 2 is implied.
+
+4. MANDATORY RIGHTS AND EARLIER LICENSES
+
+Nothing in this license excludes or limits rights that applicable law does
+not permit the Copyright Holder to exclude or limit, including any mandatory
+rights concerning backup copies, study of program operation, interoperability,
+or reverse engineering under the conditions established by that law.
+Such an exception grants no additional permission beyond its legal scope.
+
+This revision applies to copies distributed with this license. It does not
+retroactively revoke rights validly granted for other copies under an earlier
+license, and does not override applicable third-party licenses.
+
+5. BREACH
+
+To the extent permitted by applicable law, the permissions granted by this
+license terminate upon a material breach. Upon termination, the user must
+stop uses that require those permissions and delete copies no longer lawfully
+held, except where retention or use is permitted or required by applicable law.
+The Copyright Holder reserves remedies available under applicable law; this
+license does not establish automatic fines or penalties.
+
+6. NO WARRANTY; LIMITATION OF LIABILITY
+
+THE MOD IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE,
+AND NON-INFRINGEMENT. TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW,
+THE COPYRIGHT HOLDER SHALL NOT BE LIABLE FOR CLAIMS, DAMAGES, OR OTHER
+LIABILITY ARISING FROM THE MOD OR ITS USE. NOTHING IN THIS SECTION EXCLUDES
+LIABILITY THAT APPLICABLE LAW DOES NOT ALLOW TO BE EXCLUDED.
