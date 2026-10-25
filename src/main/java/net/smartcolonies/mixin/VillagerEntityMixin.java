@@ -325,7 +325,7 @@ public abstract class VillagerEntityMixin {
                            ? Activity.IDLE
                            : (
                               var9 && !var7
-                                 ? Activity.REST
+                                 ? (var3.getBrain().hasMemoryModule(MemoryModuleType.HOME) ? Activity.REST : Activity.MEET)
                                  : (
                                     var6 != ColonyRole.x3r8p2tvihwpph || !var13 && !var7 && !(var3.getHealth() < var3.getMaxHealth() * 0.3F)
                                        ? (var14 ? ColonyActivities.x12qpuae7zsr5m : null)
@@ -514,6 +514,34 @@ public abstract class VillagerEntityMixin {
                   var2.sleep(var8);
                } else {
                   ColonyNavigationHelper.x1lrdp6728c3ml(var1, var2, var8, 0.85);
+               }
+            } else {
+               // Homeless at night: gather at campfire or patrol!
+               ColonyRole role = var3.roleOf(var2.getUuid());
+               if (role == ColonyRole.x3r8p2tvihwpph) { // GUARD / MILITIA
+                  int patrolRadius = 8 + (Math.abs(var2.getId()) % 5);
+                  double angle = (var1.getTime() / 60.0) + (var2.getId() * 1.5);
+                  int px = var3.core().getX() + (int)(Math.cos(angle) * patrolRadius);
+                  int pz = var3.core().getZ() + (int)(Math.sin(angle) * patrolRadius);
+                  int py = var1.getTopY(net.minecraft.world.Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, px, pz) - 1;
+                  BlockPos patrolPos = new BlockPos(px, py, pz);
+                  ColonyNavigationHelper.x1lrdp6728c3ml(var1, var2, patrolPos, 0.65);
+               } else {
+                  BlockPos campfirePos = var3.core();
+                  double distSq = var2.getBlockPos().getSquaredDistance(campfirePos);
+                  if (distSq > 12.0) {
+                     int hash = Math.abs(var2.getUuid().hashCode());
+                     double angle = (hash % 8) * (Math.PI / 4.0);
+                     int targetDist = 2 + (hash % 3);
+                     int tx = campfirePos.getX() + (int)(Math.cos(angle) * targetDist);
+                     int tz = campfirePos.getZ() + (int)(Math.sin(angle) * targetDist);
+                     int ty = var1.getTopY(net.minecraft.world.Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, tx, tz) - 1;
+                     BlockPos targetPos = new BlockPos(tx, ty, tz);
+                     ColonyNavigationHelper.x1lrdp6728c3ml(var1, var2, targetPos, 0.65);
+                  } else {
+                     var2.getNavigation().stop();
+                     var2.getLookControl().lookAt(campfirePos.getX() + 0.5, campfirePos.getY() + 0.5, campfirePos.getZ() + 0.5);
+                  }
                }
             }
          }

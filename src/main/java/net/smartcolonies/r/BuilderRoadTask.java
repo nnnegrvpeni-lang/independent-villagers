@@ -1,7 +1,10 @@
 package net.smartcolonies.r;
 
 import com.google.common.collect.ImmutableMap;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.world.Heightmap.Type;
 import net.minecraft.entity.ai.brain.MemoryModuleState;
 import net.minecraft.entity.ai.brain.MemoryModuleType;
 import net.minecraft.entity.ai.brain.task.MultiTickTask;
@@ -72,14 +75,11 @@ public final class BuilderRoadTask extends MultiTickTask<VillagerEntity> {
             } else if (!var1.getBlockState(var5.up()).isAir() && !ColonyProtectionUtils.x231if4rvsvptj(var1, var5.up(), true, var2)) {
                this.x24sw4yjvvv3sl.x1nocpys4yjo2k(var3);
             } else if (this.x3nsayy5nxyiob.xpohy1q30uxlk(var1, var2, var5, ColonyConfig.x2by5f9ehxvwk9().work.placement_ticks, false)) {
-               if (ColonyProtectionUtils.x1bq0f8n53gtob(var1, var5, Blocks.DIRT_PATH.getDefaultState(), 3)) {
-                  this.x24sw4yjvvv3sl.x1tvwg66ci1f7k(false);
-                  ColonyChatFeedback.x2t98zlq4lu49t(var2, "дорога", 1);
-                  var2.swingHand(Hand.MAIN_HAND);
-                  ColonyManager.xchl1k1tnh3w8(var1).markDirty();
-               } else {
-                  this.x24sw4yjvvv3sl.x1nocpys4yjo2k(var3);
-               }
+               this.buildWideRoadSegment(var1, var2, var5);
+               this.x24sw4yjvvv3sl.x1tvwg66ci1f7k(false);
+               ColonyChatFeedback.x2t98zlq4lu49t(var2, "дорога", 1);
+               var2.swingHand(Hand.MAIN_HAND);
+               ColonyManager.xchl1k1tnh3w8(var1).markDirty();
             }
          }
       }
@@ -89,5 +89,41 @@ public final class BuilderRoadTask extends MultiTickTask<VillagerEntity> {
       this.x3nsayy5nxyiob.xupxzzyodxtwj(var1, var2);
       var2.getNavigation().stop();
       this.x24sw4yjvvv3sl = null;
+   }
+   private void buildWideRoadSegment(ServerWorld world, VillagerEntity builder, BlockPos center) {
+      placeSingleRoadBlock(world, center, builder);
+
+      // Widen to 3 blocks: check 3x3 footprint at ground surface
+      for (int dx = -1; dx <= 1; dx++) {
+         for (int dz = -1; dz <= 1; dz++) {
+            if (dx == 0 && dz == 0) continue;
+            int nx = center.getX() + dx;
+            int nz = center.getZ() + dz;
+            int ny = world.getTopY(Type.MOTION_BLOCKING_NO_LEAVES, nx, nz) - 1;
+            BlockPos neighbor = new BlockPos(nx, ny, nz);
+            if (Math.abs(ny - center.getY()) <= 1) {
+               placeSingleRoadBlock(world, neighbor, builder);
+            }
+         }
+      }
+   }
+
+   private void placeSingleRoadBlock(ServerWorld world, BlockPos pos, VillagerEntity builder) {
+      BlockState state = world.getBlockState(pos);
+      if (state.isOf(Blocks.DIRT_PATH) || state.isOf(Blocks.FARMLAND) || state.isOf(Blocks.WATER)
+         || state.isIn(BlockTags.LOGS) || state.isIn(BlockTags.BEDS)
+         || state.isOf(Blocks.CHEST) || state.isOf(Blocks.CRAFTING_TABLE) || state.isOf(Blocks.BELL)
+         || state.isOf(Blocks.CAMPFIRE) || state.isOf(Blocks.COMPOSTER)) {
+         return;
+      }
+      if (state.isOf(Blocks.GRASS_BLOCK) || state.isOf(Blocks.DIRT) || state.isOf(Blocks.COARSE_DIRT)
+         || state.isOf(Blocks.PODZOL) || state.isOf(Blocks.SAND) || state.isOf(Blocks.SANDSTONE)
+         || state.isOf(Blocks.GRAVEL)) {
+         BlockState above = world.getBlockState(pos.up());
+         if (!above.isAir() && above.isReplaceable()) {
+            ColonyProtectionUtils.x231if4rvsvptj(world, pos.up(), false, builder);
+         }
+         ColonyProtectionUtils.x1bq0f8n53gtob(world, pos, Blocks.DIRT_PATH.getDefaultState(), 3);
+      }
    }
 }

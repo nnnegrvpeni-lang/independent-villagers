@@ -619,7 +619,7 @@ public final class FarmerFieldTask extends MultiTickTask<VillagerEntity> {
          this.x302ihddc8urvz = null;
          this.x3ge7r6nupqfxf = 0;
          this.x22gyzpic72nbl = 0;
-      } else if (this.x3hb4q8slofu00 < FARM_OFFSETS_7X9.length && x3ek8tyax561ln(var2) != 0) {
+      } else if (this.x3hb4q8slofu00 < FARM_OFFSETS_7X9.length) {
          var2.getBrain().remember(ColonyMemoryModules.x2bwom1pasl6g5, this.x2zlk0t7dy583);
          BlockPos var3 = this.x2zlk0t7dy583.add(FARM_OFFSETS_7X9[this.x3hb4q8slofu00]);
          if (!this.x14ghv3cndp6s0(var1, var3)) {
@@ -642,8 +642,13 @@ public final class FarmerFieldTask extends MultiTickTask<VillagerEntity> {
                   ColonyProtectionUtils.x1bq0f8n53gtob(var1, var3, borderState, 3);
                   var2.swingHand(Hand.MAIN_HAND);
                } else if (this.x3hb4q8slofu00 < 56) {
-                  // Phase 2: Farmland & crops (28 blocks)
-                  this.x10t5vgir9ic2y(var1, var2, var3);
+                  // Phase 2: Farmland & crops (28 blocks) - guarantee all 28 farmland blocks placed
+                  ColonyProtectionUtils.x1bq0f8n53gtob(var1, var3, (BlockState)Blocks.FARMLAND.getDefaultState().with(FarmlandBlock.MOISTURE, 7), 3);
+                  this.x3bk6yjss3lhsi(var1, var3);
+                  if (x3ek8tyax561ln(var2) > 0) {
+                     this.x2o0pdq0sbpo5(var1, var2, var3.up());
+                  }
+                  var2.swingHand(Hand.MAIN_HAND);
                } else if (this.x3hb4q8slofu00 < 63) {
                   // Phase 3: Center Water Trench (7 blocks)
                   if (!var1.getBlockState(var3).isOf(Blocks.WATER)) {
@@ -656,7 +661,7 @@ public final class FarmerFieldTask extends MultiTickTask<VillagerEntity> {
                } else {
                   // Phase 4: Composter (1 block at 2, 1, 3)
                   BlockPos composterPos = this.x2zlk0t7dy583.add(2, 1, 3);
-                  if (var1.getBlockState(composterPos.down()).isOf(Blocks.FARMLAND) || x2c1mm5rnqniq6(var1.getBlockState(composterPos.down()))) {
+                  if (var1.getBlockState(composterPos.down()).isOf(Blocks.FARMLAND) || x2c1mm5rnqniq6(var1.getBlockState(composterPos.down())) || var1.getBlockState(composterPos.down()).isAir()) {
                      ColonyProtectionUtils.x1bq0f8n53gtob(var1, composterPos.down(), Blocks.DIRT.getDefaultState(), 3);
                   }
                   ColonyProtectionUtils.x1bq0f8n53gtob(var1, composterPos, Blocks.COMPOSTER.getDefaultState(), 3);

@@ -85,15 +85,27 @@ public final class StructurePieceHelper {
       ArrayDeque var5 = new ArrayDeque();
       HashMap var6 = new HashMap();
 
-      for (int[] var10 : new int[][]{{var3 / 2, -3}, {var3 / 2, var4 + 2}, {-3, var4 / 2}, {var3 + 2, var4 / 2}}) {
-         int var11 = var2.getX() + var10[0];
-         int var12 = var2.getZ() + var10[1];
-         if (var0.getChunkManager().isChunkLoaded(var11 >> 4, var12 >> 4)) {
-            BlockPos var13 = x3qthrkxcelgb7(var0, var11, var12);
-            if (xxon284tpck85(var0, var1, var13)) {
-               var5.add(var13);
-               var6.put(var13, var13);
-            }
+      // Connect only from the best entrance side facing the village center, preventing parallel wire loops
+      int[][] candidateSides = new int[][]{{var3 / 2, -3}, {var3 / 2, var4 + 2}, {-3, var4 / 2}, {var3 + 2, var4 / 2}};
+      int[] bestSide = candidateSides[0];
+      double bestDistSq = Double.MAX_VALUE;
+      for (int[] candidate : candidateSides) {
+         int cx = var2.getX() + candidate[0];
+         int cz = var2.getZ() + candidate[1];
+         double dist = var1.core().getSquaredDistance(cx, var1.core().getY(), cz);
+         if (dist < bestDistSq) {
+            bestDistSq = dist;
+            bestSide = candidate;
+         }
+      }
+
+      int var11 = var2.getX() + bestSide[0];
+      int var12 = var2.getZ() + bestSide[1];
+      if (var0.getChunkManager().isChunkLoaded(var11 >> 4, var12 >> 4)) {
+         BlockPos var13 = x3qthrkxcelgb7(var0, var11, var12);
+         if (xxon284tpck85(var0, var1, var13)) {
+            var5.add(var13);
+            var6.put(var13, var13);
          }
       }
 
