@@ -110,6 +110,7 @@ public final class FarmerFieldTask extends MultiTickTask<VillagerEntity> {
             if (this.x35hbh6x2b34v == FarmerFieldPhase.xi9t9eaf5346z || this.x35hbh6x2b34v == FarmerFieldPhase.x27smpl89pkspo) {
                if (var3 % 40L == 0L) {
                   this.clearOverhangsAboveFarmland(var1, var2);
+                  this.auditAndRepairAllColonyFarms(var1, var2);
                }
                this.x16irl4fyul8tl(var1, var2);
             } else if (this.x248yv75v4ezcm >= 64) {
@@ -631,10 +632,7 @@ public final class FarmerFieldTask extends MultiTickTask<VillagerEntity> {
       } else if (this.x3hb4q8slofu00 < FARM_OFFSETS_7X9.length) {
          var2.getBrain().remember(ColonyMemoryModules.x2bwom1pasl6g5, this.x2zlk0t7dy583);
          BlockPos var3 = this.x2zlk0t7dy583.add(FARM_OFFSETS_7X9[this.x3hb4q8slofu00]);
-         if (!this.x14ghv3cndp6s0(var1, var3)) {
-            this.x3hb4q8slofu00++;
-            this.x302ihddc8urvz = null;
-         } else if (this.x3ihyxa2ovvxin(var1, var2, var3.up())) {
+         if (this.x3ihyxa2ovvxin(var1, var2, var3.up())) {
             if (this.x39cq9cwr96dck.xpohy1q30uxlk(var1, var2, var3.up(), ColonyConfig.x2by5f9ehxvwk9().work.farming_ticks, false)) {
                // Support block below if empty to prevent floating/leaking
                if (var1.getBlockState(var3.down()).isAir() || !var1.getBlockState(var3.down()).isOpaqueFullCube()) {
@@ -679,6 +677,7 @@ public final class FarmerFieldTask extends MultiTickTask<VillagerEntity> {
                   }
                   ColonyProtectionUtils.x1bq0f8n53gtob(var1, composterPos, Blocks.COMPOSTER.getDefaultState(), 3);
                   var2.swingHand(Hand.MAIN_HAND);
+                  this.repairAndCompleteFarm(var1, this.x2zlk0t7dy583, var2);
                   ColonyChatFeedback.x2t98zlq4lu49t(var2, "огород построен", 1);
                }
                this.x3hb4q8slofu00++;
@@ -812,7 +811,7 @@ public final class FarmerFieldTask extends MultiTickTask<VillagerEntity> {
 
    private boolean x3ihyxa2ovvxin(ServerWorld var1, VillagerEntity var2, BlockPos var3) {
       double var4 = var2.getBlockPos().getSquaredDistance(var3);
-      if (var4 <= 9.0) {
+      if (var4 <= 9.0 || (this.x35hbh6x2b34v == FarmerFieldPhase.x3iyjmrguzv8fd && this.x2zlk0t7dy583 != null && var2.getBlockPos().getSquaredDistance(this.x2zlk0t7dy583) <= 25.0)) {
          this.x302ihddc8urvz = null;
          return true;
       } else {
@@ -979,6 +978,102 @@ public final class FarmerFieldTask extends MultiTickTask<VillagerEntity> {
             if (!st.isAir() && !st.isIn(BlockTags.CROPS) && !st.isOf(Blocks.COMPOSTER)) {
                world.breakBlock(above, true, farmer);
             }
+         }
+      }
+   }
+
+   private void repairAndCompleteFarm(ServerWorld world, BlockPos center, VillagerEntity farmer) {
+      if (!world.getChunkManager().isChunkLoaded(center.getX() >> 4, center.getZ() >> 4)) return;
+
+      // Ensure support ground and clear headroom for whole 7x9
+      for (int dx = -3; dx <= 3; dx++) {
+         for (int dz = -4; dz <= 4; dz++) {
+            BlockPos bpos = center.add(dx, 0, dz);
+            if (!world.getChunkManager().isChunkLoaded(bpos.getX() >> 4, bpos.getZ() >> 4)) continue;
+            if (world.getBlockState(bpos.down()).isAir() || !world.getBlockState(bpos.down()).isOpaqueFullCube()) {
+               world.setBlockState(bpos.down(), Blocks.DIRT.getDefaultState(), 3);
+            }
+            for (int y = 1; y <= 4; y++) {
+               BlockPos above = bpos.up(y);
+               BlockState st = world.getBlockState(above);
+               if (!st.isAir() && !st.isIn(BlockTags.CROPS) && !st.isOf(Blocks.COMPOSTER)) {
+                  world.breakBlock(above, true, farmer);
+               }
+            }
+         }
+      }
+
+      // 1. Repair 28 perimeter border logs
+      for (int i = 0; i < 28; i++) {
+         BlockPos p = center.add(FARM_OFFSETS_7X9[i]);
+         BlockState st = world.getBlockState(p);
+         if (!st.isIn(BlockTags.LOGS) && !st.isOf(Blocks.SMOOTH_SANDSTONE)) {
+            BlockState border = getBorderBlockForBiome(world, p);
+            world.setBlockState(p, border, 3);
+         }
+      }
+
+      // 2. Repair 28 farmland blocks
+      for (int i = 28; i < 56; i++) {
+         BlockPos p = center.add(FARM_OFFSETS_7X9[i]);
+         BlockState st = world.getBlockState(p);
+         if (!st.isOf(Blocks.FARMLAND)) {
+            world.setBlockState(p.down(), Blocks.DIRT.getDefaultState(), 3);
+            world.setBlockState(p, Blocks.FARMLAND.getDefaultState().with(FarmlandBlock.MOISTURE, 7), 3);
+            this.x3bk6yjss3lhsi(world, p);
+         }
+      }
+
+      // 3. Repair 7 center water blocks
+      for (int i = 56; i < 63; i++) {
+         BlockPos p = center.add(FARM_OFFSETS_7X9[i]);
+         BlockState st = world.getBlockState(p);
+         if (!st.isOf(Blocks.WATER)) {
+            world.setBlockState(p.down(), Blocks.DIRT.getDefaultState(), 3);
+            world.setBlockState(p, Blocks.WATER.getDefaultState(), 3);
+         }
+      }
+
+      // 4. Repair composter at (2, 1, 3)
+      BlockPos composterPos = center.add(2, 1, 3);
+      if (!world.getBlockState(composterPos).isOf(Blocks.COMPOSTER)) {
+         world.setBlockState(composterPos.down(), Blocks.DIRT.getDefaultState(), 3);
+         world.setBlockState(composterPos, Blocks.COMPOSTER.getDefaultState(), 3);
+      }
+   }
+
+   private void auditAndRepairAllColonyFarms(ServerWorld world, VillagerEntity farmer) {
+      if (this.x2t4nzijeau7w8 == null) return;
+      Set<BlockPos> farmlands = this.x2t4nzijeau7w8.x1hdthtpd2qb8g();
+      if (farmlands.isEmpty()) return;
+
+      Set<BlockPos> handledCenters = new HashSet<>();
+      for (BlockPos f : farmlands) {
+         if (!world.getChunkManager().isChunkLoaded(f.getX() >> 4, f.getZ() >> 4)) continue;
+         for (int dx = -3; dx <= 3; dx++) {
+            for (int dz = -4; dz <= 4; dz++) {
+               BlockPos candidate = f.add(dx, 0, dz);
+               if (world.getBlockState(candidate).isOf(Blocks.WATER)) {
+                  BlockPos potentialCenter = candidate;
+                  if (world.getBlockState(potentialCenter.add(2, 1, 3)).isOf(Blocks.COMPOSTER)
+                     || world.getBlockState(potentialCenter.add(-3, 0, -4)).isIn(BlockTags.LOGS)
+                     || world.getBlockState(potentialCenter.add(3, 0, 4)).isIn(BlockTags.LOGS)) {
+                     if (handledCenters.add(potentialCenter)) {
+                        repairAndCompleteFarm(world, potentialCenter, farmer);
+                     }
+                  }
+               }
+            }
+         }
+      }
+
+      // Also restore any individual registered farmland that was turned into water or dirt
+      for (BlockPos f : farmlands) {
+         if (!world.getChunkManager().isChunkLoaded(f.getX() >> 4, f.getZ() >> 4)) continue;
+         BlockState st = world.getBlockState(f);
+         if (!st.isOf(Blocks.FARMLAND)) {
+            world.setBlockState(f.down(), Blocks.DIRT.getDefaultState(), 3);
+            world.setBlockState(f, Blocks.FARMLAND.getDefaultState().with(FarmlandBlock.MOISTURE, 7), 3);
          }
       }
    }

@@ -108,13 +108,25 @@ public final class BuildingPlotFinder {
             }
          }
 
-         if (var18 - var17 > 4) {
+         if (var18 - var17 > 2) {
             return Optional.empty();
          } else {
             int var20 = (var17 + var18 + 1) / 2;
             if (var20 > var1.core().getY() + 16) {
                return Optional.empty();
             } else {
+               // Slope & cliff buffer check: ensure house has 3-block gentle perimeter and is not flush against a cliff/mountain
+               for (int bx = -3; bx < var4 + 3; bx++) {
+                  for (int bz = -3; bz < var5 + 3; bz++) {
+                     if (bx >= 0 && bx < var4 && bz >= 0 && bz < var5) {
+                        continue;
+                     }
+                     int bSurfY = x1zwog5kwmtqw8(var0, var2 + bx, var3 + bz);
+                     if (bSurfY > var20 + 2 || bSurfY < var20 - 3) {
+                        return Optional.empty();
+                     }
+                  }
+               }
                BlockPos var21 = new BlockPos(var2, var20, var3);
                BlockBox var22 = new BlockBox(var2 - 4, var20 - 4, var3 - 4, var2 + var4 + 3, var20 + var6 + 2, var3 + var5 + 3);
                if (ColonyState.get(var0).land().stream().anyMatch(var1x -> var1x.intersects(var22))) {
