@@ -1050,20 +1050,19 @@ public final class FarmerFieldTask extends MultiTickTask<VillagerEntity> {
       try {
          List<BlockPos> snapshot = new ArrayList<>(farmlands);
          Set<BlockPos> handledCenters = new HashSet<>();
+         if (this.x2zlk0t7dy583 != null) {
+            handledCenters.add(this.x2zlk0t7dy583);
+         }
          for (BlockPos f : snapshot) {
             if (!world.getChunkManager().isChunkLoaded(f.getX() >> 4, f.getZ() >> 4)) continue;
-            for (int dx = -3; dx <= 3; dx++) {
-               for (int dz = -4; dz <= 4; dz++) {
-                  BlockPos candidate = f.add(dx, 0, dz);
-                  if (world.getBlockState(candidate).isOf(Blocks.WATER)) {
-                     BlockPos potentialCenter = candidate;
-                     if (world.getBlockState(potentialCenter.add(2, 1, 3)).isOf(Blocks.COMPOSTER)
-                        || world.getBlockState(potentialCenter.add(-3, 0, -4)).isIn(BlockTags.LOGS)
-                        || world.getBlockState(potentialCenter.add(3, 0, 4)).isIn(BlockTags.LOGS)) {
-                        if (handledCenters.add(potentialCenter)) {
-                           repairAndCompleteFarm(world, potentialCenter, farmer);
-                           ensureRoadToFarm(world, potentialCenter);
-                        }
+            for (int dx = -4; dx <= 4; dx++) {
+               for (int dz = -5; dz <= 5; dz++) {
+                  BlockPos check = f.add(dx, 1, dz);
+                  if (world.getBlockState(check).isOf(Blocks.COMPOSTER)) {
+                     BlockPos center = check.add(-2, -1, -3);
+                     if (handledCenters.add(center)) {
+                        repairAndCompleteFarm(world, center, farmer);
+                        ensureRoadToFarm(world, center);
                      }
                   }
                }

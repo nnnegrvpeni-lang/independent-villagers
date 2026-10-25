@@ -45,7 +45,8 @@ public final class ColonyBiomeHelper {
       }
 
       if (ColonyConfig.x2by5f9ehxvwk9().roles.enable_village_walls) {
-         if (var2 >= var4.x37dzr2zekycme && !var1.x2s37os1kht7vr() && !var1.x2ad3s8aentmo4().isEmpty() && !VillagerRaidShelterTask.active(var0, var1)) {
+         long completedHouses = var1.x1ja61emeln2hc().stream().filter(ConstructionJob::x2s8emavervqrz).count();
+         if (completedHouses >= 3 && var2 >= var4.x37dzr2zekycme && !var1.x2s37os1kht7vr() && !var1.x2ad3s8aentmo4().isEmpty() && !VillagerRaidShelterTask.active(var0, var1)) {
             var4.x37dzr2zekycme = var2 + 1200L;
             int var5 = x2p7mtd5kxiire(var0, var1);
             if (var4.x14zjd0to6v6yv != 0 && var5 <= var4.x14zjd0to6v6yv) {
@@ -68,7 +69,7 @@ public final class ColonyBiomeHelper {
    }
 
    public static int x2p7mtd5kxiire(ServerWorld var0, Colony var1) {
-      double var2 = 24.0;
+      double var2 = 48.0;
       StructureStart var4 = var0.getStructureAccessor().getStructureContaining(var1.core(), StructureTags.VILLAGE);
       if (var4 != StructureStart.DEFAULT) {
          for (StructurePiece var6 : var4.getChildren()) {
@@ -88,7 +89,7 @@ public final class ColonyBiomeHelper {
 
             for (int var32 : new int[]{var24.getMinX(), var24.getMaxX()}) {
                for (int var40 : new int[]{var24.getMinZ(), var24.getMaxZ()}) {
-                  var2 = Math.max(var2, Math.sqrt(x1qj4tky9v09mn(var1.core(), var32, var40)));
+                  var2 = Math.max(var2, Math.sqrt(x1qj4tky9v09mn(var1.core(), var32, var40)) + 10.0);
                }
             }
          }

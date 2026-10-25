@@ -734,6 +734,11 @@ public final class MinerExpeditionTask extends MultiTickTask<VillagerEntity> {
    }
 
    private boolean x3kfcd4ju4t319(ServerWorld var1, VillagerEntity var2, BlockPos var3) {
+      // Never place miner torches on the surface grass! Only underground in mines!
+      int surfaceY = var1.getTopY(net.minecraft.world.Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, var3.getX(), var3.getZ());
+      if (var3.getY() >= surfaceY - 1) {
+         return false;
+      }
       for (BlockPos var5 : BlockPos.iterate(var3.add(-4, -2, -4), var3.add(4, 3, 4))) {
          if (var1.getBlockState(var5).isOf(Blocks.TORCH) || var1.getBlockState(var5).isOf(Blocks.WALL_TORCH)) {
             return true;

@@ -102,13 +102,13 @@ public final class ColonyStorageRelocator {
 
       // 5. Update colony storage registry
       StorageCategory category = colony.x29j0o9zdxri2().getOrDefault(chestPos, StorageCategory.x2y2vmpsepzv3);
-      colony.x29j0o9zdxri2().remove(chestPos);
+      colony.x3qhye0v48751k(chestPos);
       if (partnerPos != null) {
-         colony.x29j0o9zdxri2().remove(partnerPos);
+         colony.x3qhye0v48751k(partnerPos);
       }
-      colony.x29j0o9zdxri2().put(newPos, category);
+      colony.x1v7s85y1rhqmd(newPos, category);
       if (isDouble) {
-         colony.x29j0o9zdxri2().put(newPos.east(), category);
+         colony.x1v7s85y1rhqmd(newPos.east(), category);
       }
 
       // 6. Safely remove old chest blocks now that new ones are populated
