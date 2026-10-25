@@ -30,6 +30,7 @@
     "WorldChunkMixin",
     "MinecraftServerMixin",
     "ServerPlayNetworkHandlerMixin",
+    "TickCommandMixin",
     "TradeOutputSlotMixin"
   ],
   "client": [
