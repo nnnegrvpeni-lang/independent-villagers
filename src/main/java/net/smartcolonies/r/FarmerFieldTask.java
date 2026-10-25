@@ -113,13 +113,15 @@ public final class FarmerFieldTask extends MultiTickTask<VillagerEntity> {
             } else if (this.x35hbh6x2b34v == FarmerFieldPhase.xb5ox5sk2beiz) {
                if (!this.x2osz16rzlj1uy(var1, var2)) {
                   if (this.x22gyzpic72nbl >= 1) {
-                     if (x3ek8tyax561ln(var2) > 0) {
+                     // Only build a farm when NEEDED:
+                     // 1. Colony has less than 28 farmland blocks (i.e. no full farm yet)
+                     // 2. Farmer has a water bucket
+                     // 3. Farmer has at least 14 seeds in inventory
+                     int currentFarmland = this.x2t4nzijeau7w8.x1hdthtpd2qb8g().size();
+                     int maxFarmland = Math.max(28, this.x2t4nzijeau7w8.radius() > 120 ? 56 : 28);
+                     if (currentFarmland < maxFarmland && x3ek8tyax561ln(var2) >= 14 && x23na3hzbpcw6h(var2, Items.WATER_BUCKET)) {
                         this.x2zlk0t7dy583 = this.x2zlm4l0rs2vkb(var1, var2).orElse(null);
                         if (this.x2zlk0t7dy583 != null) {
-                           if (!x23na3hzbpcw6h(var2, Items.WATER_BUCKET) && !xmxmjfdwaicjw(var1, this.x2zlk0t7dy583)) {
-                              this.x35hbh6x2b34v = FarmerFieldPhase.x27smpl89pkspo;
-                              return;
-                           }
                            this.x35hbh6x2b34v = FarmerFieldPhase.x3iyjmrguzv8fd;
                            this.x3hb4q8slofu00 = 0;
                            this.x186dphgnqvqj8 = this.x2zlk0t7dy583;
@@ -444,35 +446,42 @@ public final class FarmerFieldTask extends MultiTickTask<VillagerEntity> {
    private Optional<BlockPos> x2zlm4l0rs2vkb(ServerWorld var1, VillagerEntity var2) {
       for (int var3 = 0; var3 < 1024; var3++) {
          BlockPos var4 = x8hdlkby0zqy7.get(Math.floorMod(this.x2t1b8rmtaayej++, x8hdlkby0zqy7.size()));
-         int var5 = Math.min(this.x2t4nzijeau7w8.radius() - 4, 128);
-         if (var4.getSquaredDistance(BlockPos.ORIGIN) > var5 * var5) {
-            this.x2t1b8rmtaayej = 0;
-         } else {
-            int var6 = this.x2t4nzijeau7w8.core().getX() + var4.getX();
-            int var7 = this.x2t4nzijeau7w8.core().getZ() + var4.getZ();
-            if (var1.getChunkManager().isChunkLoaded(var6 >> 4, var7 >> 4)) {
-               BlockPos var8 = new BlockPos(var6, var1.getTopY(Type.MOTION_BLOCKING_NO_LEAVES, var6, var7) - 1, var7);
-               if (this.x1joansufiq3vh.getOrDefault(var8, 0L) <= var1.getTime()
-                  && this.x14ghv3cndp6s0(var1, var8)
-                  && x2csm4l72r60h(var1, var8)
-                  && (x2c1mm5rnqniq6(var1.getBlockState(var8)) || var1.getBlockState(var8).isOf(Blocks.WATER))
-                  && (x23na3hzbpcw6h(var2, Items.WATER_BUCKET) || xmxmjfdwaicjw(var1, var8))) {
-                  int var9 = 0;
+         double distSq = var4.getSquaredDistance(BlockPos.ORIGIN);
+         // Keep farm away from town center plaza (min 14 blocks, max 48 blocks)
+         if (distSq < 14.0 * 14.0 || distSq > 48.0 * 48.0) {
+            continue;
+         }
 
-                  for (BlockPos var11 : BlockPos.iterate(var8.add(-2, 0, -2), var8.add(2, 0, 2))) {
-                     if (!var11.equals(var8)
-                        && x2c1mm5rnqniq6(var1.getBlockState(var11))
-                        && x2csm4l72r60h(var1, var11)
-                        && this.x14ghv3cndp6s0(var1, var11)
-                        && !this.x2t4nzijeau7w8.x2a24huns14rw4(var11, 2)
-                        && (x23na3hzbpcw6h(var2, Items.WATER_BUCKET) || xmxmjfdwaicjw(var1, var11))) {
-                        var9++;
-                     }
-                  }
+         int var6 = this.x2t4nzijeau7w8.core().getX() + var4.getX();
+         int var7 = this.x2t4nzijeau7w8.core().getZ() + var4.getZ();
+         if (var1.getChunkManager().isChunkLoaded(var6 >> 4, var7 >> 4)) {
+            BlockPos var8 = new BlockPos(var6, var1.getTopY(Type.MOTION_BLOCKING_NO_LEAVES, var6, var7) - 1, var7);
+            if (this.x1joansufiq3vh.getOrDefault(var8, 0L) <= var1.getTime()
+               && this.x14ghv3cndp6s0(var1, var8)
+               && x2csm4l72r60h(var1, var8)
+               && x2c1mm5rnqniq6(var1.getBlockState(var8))) {
 
-                  if (var9 >= 20) {
-                     return Optional.of(var8);
+               // Must be at least 16 blocks away from any existing colony farmland
+               boolean tooClose = this.x2t4nzijeau7w8.x1hdthtpd2qb8g().stream()
+                  .anyMatch(existingPos -> existingPos.getSquaredDistance(var8) < 16.0 * 16.0);
+               if (tooClose) {
+                  continue;
+               }
+
+               // Check 7x9 area flatness and suitability (at least 52 of 63 blocks must be flat terrain)
+               int validBlocks = 0;
+               for (BlockPos var11 : BlockPos.iterate(var8.add(-3, 0, -4), var8.add(3, 0, 4))) {
+                  int surfaceY = var1.getTopY(Type.MOTION_BLOCKING_NO_LEAVES, var11.getX(), var11.getZ()) - 1;
+                  if (Math.abs(surfaceY - var8.getY()) <= 1
+                     && this.x14ghv3cndp6s0(var1, var11)
+                     && !this.x2t4nzijeau7w8.x2a24huns14rw4(var11, 2)
+                     && !ColonyState.get(var1).isPlayerBlock(var11)) {
+                     validBlocks++;
                   }
+               }
+
+               if (validBlocks >= 52) {
+                  return Optional.of(var8);
                }
             }
          }
@@ -557,18 +566,22 @@ public final class FarmerFieldTask extends MultiTickTask<VillagerEntity> {
       return List.copyOf(var0);
    }
 
-   private static final BlockPos[] FARM_OFFSETS_5X5 = new BlockPos[]{
-      // Phase 1: Border logs (16 blocks around perimeter)
-      new BlockPos(-2, 0, -2), new BlockPos(-1, 0, -2), new BlockPos(0, 0, -2), new BlockPos(1, 0, -2), new BlockPos(2, 0, -2),
-      new BlockPos(2, 0, -1),  new BlockPos(2, 0, 0),   new BlockPos(2, 0, 1),  new BlockPos(2, 0, 2),
-      new BlockPos(1, 0, 2),   new BlockPos(0, 0, 2),   new BlockPos(-1, 0, 2), new BlockPos(-2, 0, 2),
-      new BlockPos(-2, 0, 1),  new BlockPos(-2, 0, 0),  new BlockPos(-2, 0, -1),
-      // Phase 2: Interior Farmland & Seeds (8 blocks)
-      new BlockPos(-1, 0, -1), new BlockPos(0, 0, -1),  new BlockPos(1, 0, -1),
-      new BlockPos(-1, 0, 0),                           new BlockPos(1, 0, 0),
-      new BlockPos(-1, 0, 1),  new BlockPos(0, 0, 1),   new BlockPos(1, 0, 1),
-      // Phase 3: Center Water (1 block, STRICTLY LAST)
-      new BlockPos(0, 0, 0)
+   // Canonical Minecraft 7x9 Village Farm (plains_small_farm_1)
+   private static final BlockPos[] FARM_OFFSETS_7X9 = new BlockPos[]{
+      // Phase 1: Perimeter Border logs (28 blocks)
+      new BlockPos(-3, 0, -4), new BlockPos(-2, 0, -4), new BlockPos(-1, 0, -4), new BlockPos(0, 0, -4), new BlockPos(1, 0, -4), new BlockPos(2, 0, -4), new BlockPos(3, 0, -4),
+      new BlockPos(3, 0, -3), new BlockPos(3, 0, -2), new BlockPos(3, 0, -1), new BlockPos(3, 0, 0), new BlockPos(3, 0, 1), new BlockPos(3, 0, 2), new BlockPos(3, 0, 3),
+      new BlockPos(3, 0, 4), new BlockPos(2, 0, 4), new BlockPos(1, 0, 4), new BlockPos(0, 0, 4), new BlockPos(-1, 0, 4), new BlockPos(-2, 0, 4), new BlockPos(-3, 0, 4),
+      new BlockPos(-3, 0, 3), new BlockPos(-3, 0, 2), new BlockPos(-3, 0, 1), new BlockPos(-3, 0, 0), new BlockPos(-3, 0, -1), new BlockPos(-3, 0, -2), new BlockPos(-3, 0, -3),
+      // Phase 2: Interior Farmland rows (28 blocks)
+      new BlockPos(-2, 0, -3), new BlockPos(-2, 0, -2), new BlockPos(-2, 0, -1), new BlockPos(-2, 0, 0), new BlockPos(-2, 0, 1), new BlockPos(-2, 0, 2), new BlockPos(-2, 0, 3),
+      new BlockPos(-1, 0, -3), new BlockPos(-1, 0, -2), new BlockPos(-1, 0, -1), new BlockPos(-1, 0, 0), new BlockPos(-1, 0, 1), new BlockPos(-1, 0, 2), new BlockPos(-1, 0, 3),
+      new BlockPos(1, 0, -3), new BlockPos(1, 0, -2), new BlockPos(1, 0, -1), new BlockPos(1, 0, 0), new BlockPos(1, 0, 1), new BlockPos(1, 0, 2), new BlockPos(1, 0, 3),
+      new BlockPos(2, 0, -3), new BlockPos(2, 0, -2), new BlockPos(2, 0, -1), new BlockPos(2, 0, 0), new BlockPos(2, 0, 1), new BlockPos(2, 0, 2), new BlockPos(2, 0, 3),
+      // Phase 3: Center Water Trench (7 blocks)
+      new BlockPos(0, 0, -3), new BlockPos(0, 0, -2), new BlockPos(0, 0, -1), new BlockPos(0, 0, 0), new BlockPos(0, 0, 1), new BlockPos(0, 0, 2), new BlockPos(0, 0, 3),
+      // Phase 4: Composter (1 block at 2, 1, 3)
+      new BlockPos(2, 1, 3)
    };
 
    private static BlockState getBorderBlockForBiome(ServerWorld var0, BlockPos var1) {
@@ -576,25 +589,25 @@ public final class FarmerFieldTask extends MultiTickTask<VillagerEntity> {
       if (var2.isPresent()) {
          String var3 = var2.get().getValue().getPath();
          if (var3.contains("taiga") || var3.contains("snowy") || var3.contains("frozen") || var3.contains("grove")) {
-            return Blocks.SPRUCE_LOG.getDefaultState();
+            return Blocks.STRIPPED_SPRUCE_LOG.getDefaultState();
          }
          if (var3.contains("savanna")) {
-            return Blocks.ACACIA_LOG.getDefaultState();
+            return Blocks.STRIPPED_ACACIA_LOG.getDefaultState();
          }
          if (var3.contains("desert") || var3.contains("badlands")) {
             return Blocks.SMOOTH_SANDSTONE.getDefaultState();
          }
          if (var3.contains("jungle")) {
-            return Blocks.JUNGLE_LOG.getDefaultState();
+            return Blocks.STRIPPED_JUNGLE_LOG.getDefaultState();
          }
          if (var3.contains("dark_forest")) {
-            return Blocks.DARK_OAK_LOG.getDefaultState();
+            return Blocks.STRIPPED_DARK_OAK_LOG.getDefaultState();
          }
          if (var3.contains("birch")) {
-            return Blocks.BIRCH_LOG.getDefaultState();
+            return Blocks.STRIPPED_BIRCH_LOG.getDefaultState();
          }
       }
-      return Blocks.OAK_LOG.getDefaultState();
+      return Blocks.STRIPPED_OAK_LOG.getDefaultState();
    }
 
    private void x3cfcl93yta6x3(ServerWorld var1, VillagerEntity var2) {
@@ -606,9 +619,9 @@ public final class FarmerFieldTask extends MultiTickTask<VillagerEntity> {
          this.x302ihddc8urvz = null;
          this.x3ge7r6nupqfxf = 0;
          this.x22gyzpic72nbl = 0;
-      } else if (this.x3hb4q8slofu00 < FARM_OFFSETS_5X5.length && x3ek8tyax561ln(var2) != 0) {
+      } else if (this.x3hb4q8slofu00 < FARM_OFFSETS_7X9.length && x3ek8tyax561ln(var2) != 0) {
          var2.getBrain().remember(ColonyMemoryModules.x2bwom1pasl6g5, this.x2zlk0t7dy583);
-         BlockPos var3 = this.x2zlk0t7dy583.add(FARM_OFFSETS_5X5[this.x3hb4q8slofu00]);
+         BlockPos var3 = this.x2zlk0t7dy583.add(FARM_OFFSETS_7X9[this.x3hb4q8slofu00]);
          if (!this.x14ghv3cndp6s0(var1, var3)) {
             this.x3hb4q8slofu00++;
             this.x302ihddc8urvz = null;
@@ -623,22 +636,30 @@ public final class FarmerFieldTask extends MultiTickTask<VillagerEntity> {
                   ColonyProtectionUtils.x231if4rvsvptj(var1, var3.up(), false, var2);
                }
 
-               if (this.x3hb4q8slofu00 < 16) {
-                  // Phase 1: Border log
+               if (this.x3hb4q8slofu00 < 28) {
+                  // Phase 1: Perimeter Border log (28 blocks)
                   BlockState borderState = getBorderBlockForBiome(var1, var3);
                   ColonyProtectionUtils.x1bq0f8n53gtob(var1, var3, borderState, 3);
                   var2.swingHand(Hand.MAIN_HAND);
-               } else if (this.x3hb4q8slofu00 < 24) {
-                  // Phase 2: Farmland & crop planting
+               } else if (this.x3hb4q8slofu00 < 56) {
+                  // Phase 2: Farmland & crops (28 blocks)
                   this.x10t5vgir9ic2y(var1, var2, var3);
-               } else {
-                  // Phase 3: Water (strictly last at 0, 0)
+               } else if (this.x3hb4q8slofu00 < 63) {
+                  // Phase 3: Center Water Trench (7 blocks)
                   if (!var1.getBlockState(var3).isOf(Blocks.WATER)) {
                      ColonyProtectionUtils.x1bq0f8n53gtob(var1, var3, Blocks.WATER.getDefaultState(), 3);
-                     if (x17w4mwk2x8sut(var2, Items.WATER_BUCKET)) {
-                        this.xfiiclr55ays8(var1, var2, new ItemStack(Items.BUCKET));
-                     }
                   }
+                  if (this.x3hb4q8slofu00 == 62 && x17w4mwk2x8sut(var2, Items.WATER_BUCKET)) {
+                     this.xfiiclr55ays8(var1, var2, new ItemStack(Items.BUCKET));
+                  }
+                  var2.swingHand(Hand.MAIN_HAND);
+               } else {
+                  // Phase 4: Composter (1 block at 2, 1, 3)
+                  BlockPos composterPos = this.x2zlk0t7dy583.add(2, 1, 3);
+                  if (var1.getBlockState(composterPos.down()).isOf(Blocks.FARMLAND) || x2c1mm5rnqniq6(var1.getBlockState(composterPos.down()))) {
+                     ColonyProtectionUtils.x1bq0f8n53gtob(var1, composterPos.down(), Blocks.DIRT.getDefaultState(), 3);
+                  }
+                  ColonyProtectionUtils.x1bq0f8n53gtob(var1, composterPos, Blocks.COMPOSTER.getDefaultState(), 3);
                   var2.swingHand(Hand.MAIN_HAND);
                   ColonyChatFeedback.x2t98zlq4lu49t(var2, "огород построен", 1);
                }
