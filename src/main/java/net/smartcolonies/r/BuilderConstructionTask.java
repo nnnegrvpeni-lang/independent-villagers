@@ -398,7 +398,8 @@ public final class BuilderConstructionTask extends MultiTickTask<VillagerEntity>
          .getTemplate(var1.x3kqe1qjsw9oty())
          .map(
             var1x -> {
-               StructurePlacementData var2 = new StructurePlacementData().setMirror(BlockMirror.NONE).setRotation(BlockRotation.NONE).setIgnoreEntities(true);
+               StructurePlacementData var2 = new StructurePlacementData().setMirror(BlockMirror.NONE).setRotation(var1.getRotation()).setIgnoreEntities(true);
+               BlockPos offsetOrigin = var1x.offsetByTransformedSize(var1.x3ij6gescvakv2(), BlockMirror.NONE, var1.getRotation());
                List var3 = ((StructureTemplateAccessor)var1x).xbqthaw3aplko();
                if (var3.isEmpty()) {
                   return List.of();
@@ -409,7 +410,7 @@ public final class BuilderConstructionTask extends MultiTickTask<VillagerEntity>
                   for (StructureBlockInfo var7 : ((PalettedBlockInfoList)var3.getFirst()).getAll()) {
                      BlockState var8 = var7.state().mirror(var2.getMirror()).rotate(var2.getRotation());
                      if (!var8.isAir() && !var8.isOf(Blocks.STRUCTURE_VOID) && !var8.isOf(Blocks.JIGSAW)) {
-                        var5.put(var1.x3ij6gescvakv2().add(StructureTemplate.transform(var2, var7.pos())), var8);
+                        var5.put(offsetOrigin.add(StructureTemplate.transform(var2, var7.pos())), var8);
                      }
                   }
 
@@ -435,7 +436,7 @@ public final class BuilderConstructionTask extends MultiTickTask<VillagerEntity>
                      BlockState var17 = var15.state().mirror(var2.getMirror()).rotate(var2.getRotation());
                      if (!var17.isAir() && !var17.isOf(Blocks.STRUCTURE_VOID) && !var17.isOf(Blocks.JIGSAW)) {
                         BlockPos var19 = StructureTemplate.transform(var2, var15.pos());
-                        var4.add(new BlockPlacementEntry(var1.x3ij6gescvakv2().add(var19), var17, false, false));
+                        var4.add(new BlockPlacementEntry(offsetOrigin.add(var19), var17, false, false));
                      }
                   }
 

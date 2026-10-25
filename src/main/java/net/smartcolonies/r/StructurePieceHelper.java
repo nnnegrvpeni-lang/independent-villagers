@@ -1,5 +1,6 @@
 package net.smartcolonies.r;
 
+import net.minecraft.util.BlockRotation;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -79,6 +80,27 @@ public final class StructurePieceHelper {
       } else {
          return false;
       }
+   }
+
+   public static BlockRotation getRotationForSide(ServerWorld var0, Colony var1, BlockPos var2, int var3, int var4) {
+      int[][] candidateSides = new int[][]{{var3 / 2, -3}, {var3 / 2, var4 + 2}, {-3, var4 / 2}, {var3 + 2, var4 / 2}};
+      int bestIdx = 0;
+      double bestDistSq = Double.MAX_VALUE;
+      for (int i = 0; i < candidateSides.length; i++) {
+         int cx = var2.getX() + candidateSides[i][0];
+         int cz = var2.getZ() + candidateSides[i][1];
+         double dist = var1.core().getSquaredDistance(cx, var1.core().getY(), cz);
+         if (dist < bestDistSq) {
+            bestDistSq = dist;
+            bestIdx = i;
+         }
+      }
+      return switch (bestIdx) {
+         case 1 -> BlockRotation.CLOCKWISE_180;
+         case 2 -> BlockRotation.COUNTERCLOCKWISE_90;
+         case 3 -> BlockRotation.CLOCKWISE_90;
+         default -> BlockRotation.NONE;
+      };
    }
 
    public static Optional<List<BlockPos>> x33m0vw9cimu8k(ServerWorld var0, Colony var1, BlockPos var2, int var3, int var4) {

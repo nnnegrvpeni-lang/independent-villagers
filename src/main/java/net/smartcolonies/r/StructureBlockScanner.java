@@ -49,10 +49,10 @@ public final class StructureBlockScanner {
          if (var12.x2s8emavervqrz() && !var12.x2nfrt8qxdscso().isPresent()) {
             StructureTemplate var13 = (StructureTemplate)var0.getStructureTemplateManager().getTemplate(var12.x3kqe1qjsw9oty()).orElse(null);
             if (var13 != null) {
-               Vec3i var14 = var13.getSize();
+               Vec3i var14 = var13.getRotatedSize(var12.getRotation());
                BlockBox var16 = var12.x24kbqv6g4kkrg();
                if (var14.getX() == var16.getBlockCountX() && var14.getY() == var16.getBlockCountY() && var14.getZ() == var16.getBlockCountZ()) {
-                  x25dbr9jxsajgt(var0, var1, var12.x3kqe1qjsw9oty(), var12.x3ij6gescvakv2(), BlockRotation.NONE, var16);
+                  x25dbr9jxsajgt(var0, var1, var12.x3kqe1qjsw9oty(), var12.x3ij6gescvakv2(), var12.getRotation(), var16);
                }
             }
          }
@@ -65,11 +65,12 @@ public final class StructureBlockScanner {
       StructureTemplate var6 = (StructureTemplate)var0.getStructureTemplateManager().getTemplate(var2).orElse(null);
       if (var6 != null) {
          StructurePlacementData var7 = new StructurePlacementData().setRotation(var4);
+         BlockPos offsetOrigin = var6.offsetByTransformedSize(var3, net.minecraft.util.BlockMirror.NONE, var4);
          List var8 = ((StructureTemplateAccessor)var6).xbqthaw3aplko();
          if (!var8.isEmpty()) {
             for (StructureBlockInfo var10 : ((PalettedBlockInfoList)var8.getFirst()).getAll()) {
                BlockState var11 = var10.state().rotate(var4);
-               BlockPos var12 = StructureTemplate.transform(var7, var10.pos()).add(var3);
+               BlockPos var12 = StructureTemplate.transform(var7, var10.pos()).add(offsetOrigin);
                if ((var5 == null || var5.contains(var12))
                   && var0.getChunkManager().isChunkLoaded(var12.getX() >> 4, var12.getZ() >> 4)
                   && !var11.isAir()

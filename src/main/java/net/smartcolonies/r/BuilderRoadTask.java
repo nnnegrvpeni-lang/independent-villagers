@@ -118,6 +118,12 @@ public final class BuilderRoadTask extends MultiTickTask<VillagerEntity> {
    }
 
    private void placeSingleRoadBlock(ServerWorld world, BlockPos pos, VillagerEntity builder) {
+      if (world.getBlockState(pos).isOf(Blocks.CHEST)) {
+         ColonyStorageRelocator.relocateChest(world, this.x24sw4yjvvv3sl, pos, builder);
+      }
+      if (world.getBlockState(pos.up()).isOf(Blocks.CHEST)) {
+         ColonyStorageRelocator.relocateChest(world, this.x24sw4yjvvv3sl, pos.up(), builder);
+      }
       BlockState state = world.getBlockState(pos);
       if (state.isOf(Blocks.DIRT_PATH) || state.isOf(Blocks.FARMLAND) || state.isOf(Blocks.WATER)
          || state.isIn(BlockTags.LOGS) || state.isIn(BlockTags.BEDS)

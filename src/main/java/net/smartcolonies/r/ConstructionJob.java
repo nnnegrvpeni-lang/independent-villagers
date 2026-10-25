@@ -1,5 +1,6 @@
 package net.smartcolonies.r;
 
+import net.minecraft.util.BlockRotation;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -31,6 +32,7 @@ public final class ConstructionJob {
    private boolean xhgwli2r8opws;
    private final Map<UUID, Long> x1oaaxvbq4ab5j = new HashMap<>();
    private boolean xmcr06aulcksa;
+   private BlockRotation rotation = BlockRotation.NONE;
 
    public boolean xxo2yeczi7qrw(UUID var1, long var2) {
       this.x1oaaxvbq4ab5j.entrySet().removeIf(var2x -> var2x.getValue() <= var2);
@@ -169,14 +171,24 @@ public final class ConstructionJob {
       return this.xhgwli2r8opws || this.x1jlq787lmscj6 == ConstructionStatus.xqfd7s4y4gux6;
    }
 
+   public BlockRotation getRotation() {
+      return this.rotation != null ? this.rotation : BlockRotation.NONE;
+   }
+
+   public void setRotation(BlockRotation rot) {
+      this.rotation = rot != null ? rot : BlockRotation.NONE;
+   }
+
    public BlockBox x24kbqv6g4kkrg() {
+      int sizeX = (this.rotation == BlockRotation.CLOCKWISE_90 || this.rotation == BlockRotation.COUNTERCLOCKWISE_90) ? this.x82v6jq0p0uao : this.x5x75nz0elcmr;
+      int sizeZ = (this.rotation == BlockRotation.CLOCKWISE_90 || this.rotation == BlockRotation.COUNTERCLOCKWISE_90) ? this.x5x75nz0elcmr : this.x82v6jq0p0uao;
       return new BlockBox(
          this.x79ihhcocnyk1.getX(),
          this.x79ihhcocnyk1.getY(),
          this.x79ihhcocnyk1.getZ(),
-         this.x79ihhcocnyk1.getX() + this.x5x75nz0elcmr - 1,
+         this.x79ihhcocnyk1.getX() + sizeX - 1,
          this.x79ihhcocnyk1.getY() + this.x1wuggvufpo7hz - 1,
-         this.x79ihhcocnyk1.getZ() + this.x82v6jq0p0uao - 1
+         this.x79ihhcocnyk1.getZ() + sizeZ - 1
       );
    }
 
@@ -281,6 +293,7 @@ public final class ConstructionJob {
 
       var1.putInt("property_level", this.x165uev4yx79br);
       var1.putBoolean("completed_once", this.x2s8emavervqrz());
+      var1.putString("rotation", this.getRotation().name());
       return var1;
    }
 
@@ -319,6 +332,11 @@ public final class ConstructionJob {
          xk58m2ye6g58t(var0, "owner"),
          var0.getInt("property_level", 0)
       );
+      if (var0.contains("rotation")) {
+         try {
+            var4.setRotation(BlockRotation.valueOf(var0.getString("rotation", "NONE")));
+         } catch (Exception ignored) {}
+      }
       var4.x2pyv5aa4h53xv = var0.getLong("retry_after", 0L);
       var4.xmcr06aulcksa = var0.getBoolean("catchup", false);
       var4.xhgwli2r8opws = var0.getBoolean("completed_once", var2 == ConstructionStatus.xqfd7s4y4gux6);

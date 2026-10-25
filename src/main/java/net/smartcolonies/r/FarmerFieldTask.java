@@ -1047,33 +1047,64 @@ public final class FarmerFieldTask extends MultiTickTask<VillagerEntity> {
       Set<BlockPos> farmlands = this.x2t4nzijeau7w8.x1hdthtpd2qb8g();
       if (farmlands.isEmpty()) return;
 
-      Set<BlockPos> handledCenters = new HashSet<>();
-      for (BlockPos f : farmlands) {
-         if (!world.getChunkManager().isChunkLoaded(f.getX() >> 4, f.getZ() >> 4)) continue;
-         for (int dx = -3; dx <= 3; dx++) {
-            for (int dz = -4; dz <= 4; dz++) {
-               BlockPos candidate = f.add(dx, 0, dz);
-               if (world.getBlockState(candidate).isOf(Blocks.WATER)) {
-                  BlockPos potentialCenter = candidate;
-                  if (world.getBlockState(potentialCenter.add(2, 1, 3)).isOf(Blocks.COMPOSTER)
-                     || world.getBlockState(potentialCenter.add(-3, 0, -4)).isIn(BlockTags.LOGS)
-                     || world.getBlockState(potentialCenter.add(3, 0, 4)).isIn(BlockTags.LOGS)) {
-                     if (handledCenters.add(potentialCenter)) {
-                        repairAndCompleteFarm(world, potentialCenter, farmer);
+      try {
+         List<BlockPos> snapshot = new ArrayList<>(farmlands);
+         Set<BlockPos> handledCenters = new HashSet<>();
+         for (BlockPos f : snapshot) {
+            if (!world.getChunkManager().isChunkLoaded(f.getX() >> 4, f.getZ() >> 4)) continue;
+            for (int dx = -3; dx <= 3; dx++) {
+               for (int dz = -4; dz <= 4; dz++) {
+                  BlockPos candidate = f.add(dx, 0, dz);
+                  if (world.getBlockState(candidate).isOf(Blocks.WATER)) {
+                     BlockPos potentialCenter = candidate;
+                     if (world.getBlockState(potentialCenter.add(2, 1, 3)).isOf(Blocks.COMPOSTER)
+                        || world.getBlockState(potentialCenter.add(-3, 0, -4)).isIn(BlockTags.LOGS)
+                        || world.getBlockState(potentialCenter.add(3, 0, 4)).isIn(BlockTags.LOGS)) {
+                        if (handledCenters.add(potentialCenter)) {
+                           repairAndCompleteFarm(world, potentialCenter, farmer);
+                           ensureRoadToFarm(world, potentialCenter);
+                        }
                      }
                   }
                }
             }
          }
-      }
 
-      // Also restore any individual registered farmland that was turned into water or dirt
-      for (BlockPos f : farmlands) {
-         if (!world.getChunkManager().isChunkLoaded(f.getX() >> 4, f.getZ() >> 4)) continue;
-         BlockState st = world.getBlockState(f);
-         if (!st.isOf(Blocks.FARMLAND)) {
-            world.setBlockState(f.down(), Blocks.DIRT.getDefaultState(), 3);
-            world.setBlockState(f, Blocks.FARMLAND.getDefaultState().with(FarmlandBlock.MOISTURE, 7), 3);
+         // Also restore any individual registered farmland that was turned into water or dirt
+         for (BlockPos f : snapshot) {
+            if (!world.getChunkManager().isChunkLoaded(f.getX() >> 4, f.getZ() >> 4)) continue;
+            BlockState st = world.getBlockState(f);
+            if (!st.isOf(Blocks.FARMLAND)) {
+               world.setBlockState(f.down(), Blocks.DIRT.getDefaultState(), 3);
+               world.setBlockState(f, Blocks.FARMLAND.getDefaultState().with(FarmlandBlock.MOISTURE, 7), 3);
+            }
+         }
+      } catch (Exception ignored) {
+      }
+   }
+
+   private void ensureRoadToFarm(ServerWorld world, BlockPos farmCenter) {
+      if (this.x2t4nzijeau7w8 == null) return;
+      boolean hasRoadNear = false;
+      for (int dx = -4; dx <= 4; dx++) {
+         for (int dz = -5; dz <= 5; dz++) {
+            if (world.getBlockState(farmCenter.add(dx, 0, dz)).isOf(Blocks.DIRT_PATH)) {
+               hasRoadNear = true;
+               break;
+            }
+         }
+         if (hasRoadNear) break;
+      }
+      if (!hasRoadNear) {
+         BlockPos farmEntrance = farmCenter.add(2, 0, 5);
+         Optional<List<BlockPos>> roadPath = StructurePieceHelper.x33m0vw9cimu8k(world, this.x2t4nzijeau7w8, farmEntrance, 3, 3);
+         if (roadPath.isPresent() && !roadPath.get().isEmpty()) {
+            for (BlockPos r : roadPath.get()) {
+               if (!this.x2t4nzijeau7w8.x1n1a2vp01kxzf().contains(r)) {
+                  this.x2t4nzijeau7w8.x1n1a2vp01kxzf().add(r);
+               }
+            }
+            ColonyManager.xchl1k1tnh3w8(world).markDirty();
          }
       }
    }

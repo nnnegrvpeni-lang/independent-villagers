@@ -1,5 +1,6 @@
 package net.smartcolonies.r;
 
+import net.minecraft.util.BlockRotation;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -693,7 +694,8 @@ public final class ColonyManager {
             for (int var8 : new int[]{var2.getMinZ() - var11, var2.getMaxZ() + var11}) {
                int var9 = var0.getTopY(Type.MOTION_BLOCKING_NO_LEAVES, var12, var8);
                BlockPos var10 = new BlockPos(var12, var9, var8);
-               if (x1svuyoyvp8ad5(var0, var10, var10.east())) {
+               if (x1svuyoyvp8ad5(var0, var10, var10.east())
+                  && x3psqezd5jem54(var0, var10).filter(col -> ColonyStorageRelocator.isNearRoad(var0, col, var10, 2)).isEmpty()) {
                   return Optional.of(var10);
                }
             }
@@ -718,7 +720,8 @@ public final class ColonyManager {
                         if (x1svuyoyvp8ad5(var0, var8, var9)
                            && !var1.x1ja61emeln2hc().stream().anyMatch(var2x -> var2x.x24kbqv6g4kkrg().contains(var8) || var2x.x24kbqv6g4kkrg().contains(var9))
                            && !var0.getBlockState(var8.down()).isOf(Blocks.CHEST)
-                           && !var0.getBlockState(var9.down()).isOf(Blocks.CHEST)) {
+                           && !var0.getBlockState(var9.down()).isOf(Blocks.CHEST)
+                           && !ColonyStorageRelocator.isNearRoad(var0, var1, var8, 2)) {
                            return Optional.of(var8);
                         }
                      }
@@ -1909,6 +1912,8 @@ public final class ColonyManager {
                   return Optional.empty();
                } else {
                   ConstructionJob var10 = new ConstructionJob(UUID.randomUUID(), var5, (BlockPos)var8.get(), var7.getX(), var7.getY(), var7.getZ(), var2, var3);
+                  BlockRotation houseRot = StructurePieceHelper.getRotationForSide(var0, var1, (BlockPos)var8.get(), var7.getX(), var7.getZ());
+                  var10.setRotation(houseRot);
                   var1.x31ve0dsfeaxo4(var10);
                   return Optional.of(var10);
                }
